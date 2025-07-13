@@ -68,9 +68,9 @@ export default function Header(): JSX.Element {
       <div className="container flex items-center justify-between">
         <Link
           href="#home"
-          className="text-foreground font-semibold text-lg hover:text-primary transition-colors"
+          className="text-foreground flex justify-center items-center gap-5 font-semibold text-lg hover:text-primary transition-colors"
         >
-          <span className="font-mono text-primary">/</span>Babar Ali
+          <img className="w-10 rounded-lg" src="./logo.jpg" alt="" /> <span>Babar Ali</span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-1">

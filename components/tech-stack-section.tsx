@@ -3,12 +3,11 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Image from "next/image"
 import Particles from "./Particles-BG"
 
 type TechCategory =
-| "ml_dl_cv"
-| "data_manipulation"
+  | "ml_dl_cv"
+  | "data_manipulation"
   | "visualization"
   | "llm"
   | "rag"
@@ -27,7 +26,7 @@ const techStack: TechItem[] = [
   { name: "NumPy", level: "expert", category: "data_manipulation" },
   { name: "Excel", level: "expert", category: "data_manipulation" },
 
-  // Machine Learning / Deep Learning / Computer Vision
+  // ML/DL/CV
   { name: "Scikit-learn", level: "expert", category: "ml_dl_cv" },
   { name: "XGBoost", level: "proficient", category: "ml_dl_cv" },
   { name: "CatBoost", level: "familiar", category: "ml_dl_cv" },
@@ -79,7 +78,7 @@ export default function TechStackSection() {
   const [activeTab, setActiveTab] = useState<TechCategory>("ml_dl_cv")
 
   const filterTechByCategory = (category: TechCategory) => {
-    return techStack.filter(tech => tech.category === category)
+    return techStack.filter((tech) => tech.category === category)
   }
 
   const levelOrder = {
@@ -107,103 +106,106 @@ export default function TechStackSection() {
 
   return (
     <section id="tech-stack" className="py-20 md:py-32 relative overflow-hidden">
-  {/* Background particles layer */}
-  <div className="absolute inset-0 z-0">
-    <Particles
-      particleColors={["#ffffff", "#ffffff"]}
-      particleCount={200}
-      particleSpread={10}
-      speed={0.1}
-      particleBaseSize={100}
-      moveParticlesOnHover={true}
-      alphaParticles={false}
-      disableRotation={false}
-    />
-  </div>
-
-  {/* Foreground content */}
-  <div className="container flex justify-center max-w-7xl relative z-10">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6 }}
-    >
-      <h2 className="text-3xl font-bold mb-4">
-        <span className="font-mono text-primary">#</span> Tech Stack
-      </h2>
-      <p className="text-muted-foreground max-w-2xl mb-10">
-        My evolving skillset across data science, machine learning, automation,
-        LLMs, and more.
-      </p>
-
-      <div className="flex justify-center lg:flex-row">
-        <div className="lg:w-1/1 flex items-center">
-          <Tabs
-            defaultValue="ml_dl_cv"
-            value={activeTab}
-            onValueChange={(value) => setActiveTab(value as TechCategory)}
-          >
-            <TabsList className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 mb-8 gap-5">
-              <TabsTrigger value="ml_dl_cv">ML/DL</TabsTrigger>
-              <TabsTrigger value="data_manipulation">Data</TabsTrigger> 
-              <TabsTrigger value="visualization">Viz</TabsTrigger>
-              <TabsTrigger value="llm">LLM</TabsTrigger>
-              <TabsTrigger value="rag">RAG</TabsTrigger>
-              <TabsTrigger value="automation">Automation</TabsTrigger>
-              <TabsTrigger value="frontend">Frontend</TabsTrigger>
-            </TabsList>
-
-            {(
-              [
-                "ml_dl_cv",
-                "data_manipulation",
-                "visualization",
-                "llm",
-                "rag",
-                "automation",
-                "frontend",
-              ] as TechCategory[]
-            ).map((category) => (
-              <TabsContent key={category} value={category} className="mt-0">
-                <div className="bg-accent/30 rounded-lg p-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {filterTechByCategory(category)
-                      .sort(sortByLevel)
-                      .map((tech) => (
-                        <div
-                          key={tech.name}
-                          className="bg-card border border-border/50 rounded-md p-4 relative overflow-hidden"
-                        >
-                          <div
-                            className="absolute bottom-0 left-0 h-1"
-                            style={{
-                              width:
-                                tech.level === "expert"
-                                  ? "100%"
-                                  : tech.level === "proficient"
-                                  ? "75%"
-                                  : tech.level === "familiar"
-                                  ? "50%"
-                                  : "25%",
-                              background: getLevelColor(tech.level),
-                            }}
-                          />
-                          <h3 className="font-medium mb-1">{tech.name}</h3>
-                          <p className="text-xs text-muted-foreground capitalize">
-                            {tech.level}
-                          </p>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
+      <div className="absolute inset-0 z-0">
+        <Particles
+          particleColors={["#ffffff", "#ffffff"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover={true}
+          alphaParticles={false}
+          disableRotation={false}
+        />
       </div>
-    </motion.div>
-  </div>
-</section>
+
+      <div className="container flex justify-center max-w-7xl relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-3xl font-bold mb-4">
+            <span className="font-mono text-primary">#</span> Tech Stack
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mb-10">
+            My evolving skillset across data science, machine learning, automation,
+            LLMs, and more.
+          </p>
+
+          <div className="flex justify-center lg:flex-row">
+            <div className="lg:w-1/1 flex items-center">
+              <Tabs
+                defaultValue="ml_dl_cv"
+                value={activeTab}
+                onValueChange={(value) => setActiveTab(value as TechCategory)}
+              >
+                {/* ✅ Responsive scrollable TabsList */}
+                <TabsList
+                  className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3 text-sm overflow-x-auto px-2 sm:px-0 mb-6"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
+                  <TabsTrigger value="ml_dl_cv">ML/DL</TabsTrigger>
+                  <TabsTrigger value="data_manipulation">Data</TabsTrigger>
+                  <TabsTrigger value="visualization">Viz</TabsTrigger>
+                  <TabsTrigger value="llm">LLM</TabsTrigger>
+                  <TabsTrigger value="rag">RAG</TabsTrigger>
+                  <TabsTrigger value="automation">Automation</TabsTrigger>
+                  <TabsTrigger value="frontend">Frontend</TabsTrigger>
+                </TabsList>
+
+                {(
+                  [
+                    "ml_dl_cv",
+                    "data_manipulation",
+                    "visualization",
+                    "llm",
+                    "rag",
+                    "automation",
+                    "frontend",
+                  ] as TechCategory[]
+                ).map((category) => (
+                  <TabsContent key={category} value={category} className="mt-0">
+                    <div className="bg-accent/30 rounded-lg p-4 sm:p-6">
+                      {/* ✅ Responsive Grid for mobile */}
+                      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {filterTechByCategory(category)
+                          .sort(sortByLevel)
+                          .map((tech) => (
+                            <div
+                              key={tech.name}
+                              className="bg-card border border-border/50 rounded-md p-4 relative overflow-hidden"
+                            >
+                              <div
+                                className="absolute bottom-0 left-0 h-1"
+                                style={{
+                                  width:
+                                    tech.level === "expert"
+                                      ? "100%"
+                                      : tech.level === "proficient"
+                                      ? "75%"
+                                      : tech.level === "familiar"
+                                      ? "50%"
+                                      : "25%",
+                                  background: getLevelColor(tech.level),
+                                }}
+                              />
+                              <h3 className="font-medium mb-1">{tech.name}</h3>
+                              <p className="text-xs text-muted-foreground capitalize">
+                                {tech.level}
+                              </p>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   )
 }

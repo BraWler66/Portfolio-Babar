@@ -171,10 +171,10 @@ export default function CTASection() {
                   <CardTitle>
                     {activeTab === "contact" && "Send a Message"}
                     {activeTab === "hire" && "Work with Me"}
-                    {activeTab === "collaborate" && "Let&apos;s Build Together"}
+                    {activeTab === "collaborate" && "Let's Build Together"}
                   </CardTitle>
                   <CardDescription>
-                    {activeTab === "contact" && "I&apos;ll get back to you as soon as possible"}
+                    {activeTab === "contact" && "I'll get back to you as soon as possible"}
                     {activeTab === "hire" && "Tell me about your project or position"}
                     {activeTab === "collaborate" && "Share your idea and how we can collaborate"}
                   </CardDescription>

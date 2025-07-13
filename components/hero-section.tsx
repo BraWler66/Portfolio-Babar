@@ -175,7 +175,7 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+      <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
         <span className="text-muted-foreground text-sm mb-2">Scroll to explore</span>
         <motion.div
           animate={{ y: [0, 10, 0] }}

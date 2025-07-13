@@ -3,8 +3,7 @@
 import React from 'react'
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, ExternalLinkIcon, GithubIcon } from "lucide-react"
-import { CardFooter } from "@/components/ui/card"
+import { GithubIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -21,7 +20,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, github, l
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
-      className="bg-accent/30 rounded-xl p-6 border border-border/50 w-[450px] h-[230px] backdrop-blur transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.1)] relative"
+      className="bg-accent/30 rounded-xl p-6 border border-border/50 w-full max-w-[450px] h-auto backdrop-blur transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.1)] relative"
     >
       <div className="flex items-center gap-3 mb-3">
         <h3 className="text-lg font-semibold">{title}</h3>
@@ -54,46 +53,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, github, l
 }
 
 const HumanBody: React.FC = () => {
-  // Define specific skills for each project
-  const breastCancerSkills = [
-    "Deep Learning",
-    "YOLOv8",
-    "Medical Image Segmentation",
-    "Data Preprocessing",
-  ];
-
-  const wbbcSkills = [
-    "Deep Learning",
-    "TensorFlow",
-    "Data Preprocessing",
-    "Image Augmentation"
-  ];
-
-  const kidneyStoneSkills = [
-    "YOLOv8",
-    "Object Detection",
-    "Data Augmentation",
-    "Custom Dataset Training"
-  ];
-
-  const autonomousSkills = [
-    "Deep Learning  ",
-    "Computer Vision ",
-    "Advanced Data Visualization",
-    "Transfer Learning "
-  ];
-
-  const roboticArmSkills = [
-
-    "Deep Learning", "YOLOv8", "Computer Vision",  "Transfer Learning"
-
-  ];
+  const breastCancerSkills = ["Deep Learning", "YOLOv8", "Medical Image Segmentation", "Data Preprocessing"];
+  const wbbcSkills = ["Deep Learning", "TensorFlow", "Data Preprocessing", "Image Augmentation"];
+  const kidneyStoneSkills = ["YOLOv8", "Object Detection", "Data Augmentation", "Custom Dataset Training"];
+  const autonomousSkills = ["Deep Learning", "Computer Vision", "Advanced Data Visualization", "Transfer Learning"];
+  const roboticArmSkills = ["Deep Learning", "YOLOv8", "Computer Vision", "Transfer Learning"];
 
   return (
-    <div className="container mx-auto relative my-10">
-      <div className="relative py-10">
+    <div className="container mx-auto relative my-10 px-4 overflow-x-hidden">
+      {/* Desktop Layout */}
+      <div className="relative py-10 hidden md:block">
         <img className="max-w-2xl mx-auto" src="./Human-body2.png" alt="Human Body" />
-        
+
         {/* Breast Cancer Tumor Segmentation */}
         <div className="absolute top-[17%] left-[52%]">
           <img className="w-36 h-36 z-40 rotate-4" src="./arrow.png" alt="arrow" />
@@ -103,12 +74,12 @@ const HumanBody: React.FC = () => {
             title="Breast Cancer Tumor Segmentation"
             description="Tumor segmentation in mammogram images using advanced deep learning segmentation models."
             github="https://github.com/BraWler66/YOLOv8_Medical_Imaging"
-            live="https://yourwebsite.com/facial-recognition"
+            live=""
             skills={breastCancerSkills}
           />
         </div>
 
-        {/* WBBC Segmentation */}
+        {/* Kidney Abnormalities */}
         <div className="absolute top-[40%] left-[50%]">
           <img className="w-36 h-36" src="./arrow.png" alt="arrow" />
         </div>
@@ -117,12 +88,12 @@ const HumanBody: React.FC = () => {
             title="Deep Learning-Based Detection of Kidney Abnormalities from CT Scans"
             description="AI-powered CT scan analysis for early kidney abnormality detection."
             github="https://github.com/BraWler66/Deep-Learning-Based-Detection-of-Kidney-Abnormalities-from-CT-Scans"
-            live="https://yourwebsite.com/wbbc-segmentation"
+            live=""
             skills={wbbcSkills}
           />
         </div>
 
-        {/* Kidney Stone Detection */}
+        {/* RBC & WBC */}
         <div className="absolute top-[15%] left-[34%]">
           <img className="w-36 h-36 rotate-[180deg]" src="./arrow.png" alt="arrow" />
         </div>
@@ -131,38 +102,79 @@ const HumanBody: React.FC = () => {
             title="RBC & WBC Detection in Microscopic Blood Images"
             description="Accurate detection and classification of red and white blood cells using object detection."
             github="https://github.com/BraWler66/YOLOv8_Medical_Imaging"
-            live="https://yourwebsite.com/kidney-stone-detection"
+            live=""
             skills={kidneyStoneSkills}
           />
         </div>
 
-        {/* Autonomous Driving */}
+        {/* Osteoarthritis Detection */}
         <div className="absolute top-[45%] rotate-[180deg] left-[30%]">
           <img className="w-36 h-36" src="./arrow.png" alt="arrow" />
         </div>
         <div className="absolute top-[69%] left-[65%]">
           <ProjectCard
-            title="Knee-Osteoarthritis-Grading-Using-X-ray-Images-ResNet"
+            title="Knee Osteoarthritis Grading Using X-ray Images"
             description="Automated knee osteoarthritis grading via X-ray using ResNet."
             github="https://github.com/BraWler66/Knee-Osteoarthritis-Grading-Using-X-ray-Images-ResNet-"
-            live="https://yourwebsite.com/autonomous-driving"
+            live=""
             skills={autonomousSkills}
           />
         </div>
 
-        {/* Robotic Arm */}
+        {/* COVID-19 Detection */}
         <div className="absolute top-[65%] left-[55%]">
           <img className="w-36 h-36 rotate-12" src="./arrow.png" alt="arrow" />
         </div>
         <div className="absolute top-[5%] right-[70%]">
           <ProjectCard
-            title="AI-Based COVID-19 Detection from Chest X-rays chest"
+            title="AI-Based COVID-19 Detection from Chest X-rays"
             description="Real-time COVID-19 detection from X-ray images using YOLOv8."
             github="https://github.com/BraWler66/YOLOv8_Medical_Imaging"
-            live="https://yourwebsite.com/autonomous-driving"
+            live=""
             skills={roboticArmSkills}
           />
         </div>
+      </div>
+
+      {/* Mobile Layout */}
+      <div className="flex flex-col items-center gap-8 md:hidden">
+        <img className="w-full max-w-xs" src="./Human-body2.png" alt="Human Body" />
+
+        <ProjectCard
+          title="Breast Cancer Tumor Segmentation"
+          description="Tumor segmentation in mammogram images using advanced deep learning segmentation models."
+          github="https://github.com/BraWler66/YOLOv8_Medical_Imaging"
+          live=""
+          skills={breastCancerSkills}
+        />
+        <ProjectCard
+          title="Kidney Abnormality Detection from CT Scans"
+          description="AI-powered CT scan analysis for early kidney abnormality detection."
+          github="https://github.com/BraWler66/Deep-Learning-Based-Detection-of-Kidney-Abnormalities-from-CT-Scans"
+          live=""
+          skills={wbbcSkills}
+        />
+        <ProjectCard
+          title="RBC & WBC Detection in Microscopic Blood Images"
+          description="Accurate detection and classification of red and white blood cells using object detection."
+          github="https://github.com/BraWler66/YOLOv8_Medical_Imaging"
+          live=""
+          skills={kidneyStoneSkills}
+        />
+        <ProjectCard
+          title="Knee Osteoarthritis Grading Using X-ray Images"
+          description="Automated knee osteoarthritis grading via X-ray using ResNet."
+          github="https://github.com/BraWler66/Knee-Osteoarthritis-Grading-Using-X-ray-Images-ResNet-"
+          live=""
+          skills={autonomousSkills}
+        />
+        <ProjectCard
+          title="AI-Based COVID-19 Detection from Chest X-rays"
+          description="Real-time COVID-19 detection from X-ray images using YOLOv8."
+          github="https://github.com/BraWler66/YOLOv8_Medical_Imaging"
+          live=""
+          skills={roboticArmSkills}
+        />
       </div>
     </div>
   )
