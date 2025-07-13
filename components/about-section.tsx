@@ -21,13 +21,12 @@ export default function AboutSection() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
             <div className="md:col-span-7">
               <p className="text-lg mb-8 text-muted-foreground leading-relaxed">
-                I'm an AI enthusiast with a passion for building intelligent systems. I love creating machine learning models, analyzing complex datasets, and solving real-world problems through data-driven solutions. Currently exploring the intersection of AI, data science, and product development.
-
-
+                I&apos;m an AI enthusiast with a passion for building intelligent systems. I love creating machine learning models, analyzing complex datasets, and solving real-world problems through data-driven solutions. Currently exploring the intersection of AI, data science, and product development.
               </p>
 
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              
+
                 {/* 1 */}
                 <motion.div
                   whileHover={{ scale: 1.02 }}
@@ -140,7 +139,7 @@ export default function AboutSection() {
                   </h4>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 group hover:bg-accent/30 p-3 rounded-lg transition-all duration-300">
-                       <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                         <span className="text-primary text-sm p-2">→</span>
                       </div>
                       <div>
