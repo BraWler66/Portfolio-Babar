@@ -86,7 +86,7 @@ export default function CTASection() {
               <Card className="h-full bg-card/70 backdrop-blur">
                 <CardHeader>
                   <CardTitle>Connect with Me</CardTitle>
-                  <CardDescription>Choose how you&apos;d like to reach out</CardDescription>
+                  <CardDescription>Choose how you'd like to reach out</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Contact Options */}
