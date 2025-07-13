@@ -77,7 +77,7 @@ export default function CTASection() {
             <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Have a project idea, collaboration opportunity, or just want to chat about AI and emerging technologies?
-              I'm always open to connecting with fellow researchers, developers, and creators.
+              I&apos;m always open to connecting with fellow researchers, developers, and creators.
             </p>
           </div>
 
@@ -86,10 +86,9 @@ export default function CTASection() {
               <Card className="h-full bg-card/70 backdrop-blur">
                 <CardHeader>
                   <CardTitle>Connect with Me</CardTitle>
-                  <CardDescription>Choose how you'd like to reach out</CardDescription>
+                  <CardDescription>Choose how you&apos;d like to reach out</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  {/* Contact Options */}
                   <a
                     href="mailto:pratikkale7661@gmail.com"
                     className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-accent"
@@ -172,10 +171,10 @@ export default function CTASection() {
                   <CardTitle>
                     {activeTab === "contact" && "Send a Message"}
                     {activeTab === "hire" && "Work with Me"}
-                    {activeTab === "collaborate" && "Let's Build Together"}
+                    {activeTab === "collaborate" && "Let&apos;s Build Together"}
                   </CardTitle>
                   <CardDescription>
-                    {activeTab === "contact" && "I'll get back to you as soon as possible"}
+                    {activeTab === "contact" && "I&apos;ll get back to you as soon as possible"}
                     {activeTab === "hire" && "Tell me about your project or position"}
                     {activeTab === "collaborate" && "Share your idea and how we can collaborate"}
                   </CardDescription>
