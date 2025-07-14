@@ -17,12 +17,32 @@ const firaCode = Fira_Code({
 
 export const metadata: Metadata = {
   title: 'Babar Ali | Portfolio',
-  description: "Babar Ali Portfolio",
+  description: 'Babar Ali Portfolio',
   icons: {
     icon: '/favicon.ico',
   },
-  
-}
+  openGraph: {
+    title: 'Babar Ali | Portfolio',
+    description: 'Explore my work in AI, medical computer vision, and intelligent systems.',
+    url: 'https://babar-ali-portfolio.vercel.app',
+    siteName: 'Babar Ali Portfolio',
+    images: [
+      {
+        url: 'https://babar-ali-portfolio.vercel.app/logo.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Client Logo',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Babar Ali | Portfolio',
+    description: 'Explore my work in AI, medical computer vision, and intelligent systems.',
+    images: ['https://babar-ali-portfolio.vercel.app/logo.jpg'],
+  },
+};
 
 export default function RootLayout({
   children,
