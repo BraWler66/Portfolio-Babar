@@ -151,7 +151,7 @@ export default function HeroSection() {
             <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
           <Button variant="outline" asChild className="hover:scale-105 transition-transform">
-            <Link href="/Resume.pdf" target="_blank" download>
+            <Link href="/babar-ali-resume.pdf" target="_blank" download>
               Resume
               <DownloadIcon className="ml-2 h-4 w-4" />
             </Link>
