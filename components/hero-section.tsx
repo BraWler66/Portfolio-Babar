@@ -38,7 +38,7 @@ export default function HeroSection() {
   const skills = [
     "Ai",
     "Machine Learning",
-    "Data Analysist",
+    "Data Analyst",
     "LLM",
     "Viz",
     "Frontend",
@@ -135,7 +135,7 @@ export default function HeroSection() {
               skill === "Frontend" && "bg-chart-1/20 text-chart-1 hover:bg-chart-1/30",
               skill === "Machine Learning" && "bg-chart-2/20 text-chart-2 hover:bg-chart-2/30",
               skill === "Viz" && "bg-chart-2/20 text-chart-2 hover:bg-chart-2/30",
-                skill === "Data Analysist" && "bg-chart-3/20 text-chart-3 hover:bg-chart-3/30",
+                skill === "Data Analyst" && "bg-chart-3/20 text-chart-3 hover:bg-chart-3/30",
                 skill === "LLM" && "bg-chart-4/20 text-chart-4 hover:bg-chart-4/30",
                 skill === "Automation" && "bg-chart-4/20 text-chart-4 hover:bg-chart-4/30",
               )}

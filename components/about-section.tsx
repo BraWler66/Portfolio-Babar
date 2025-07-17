@@ -126,7 +126,7 @@ export default function AboutSection() {
                         <span className="text-primary text-sm">→</span>
                       </div>
                       <div>
-                        <p className="font-medium">Data Analysist</p>
+                        <p className="font-medium">Data Analyst</p>
                         <p className="text-sm text-muted-foreground">1+ years experience (academic)</p>
                       </div>
                     </div>
