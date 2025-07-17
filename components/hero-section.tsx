@@ -106,10 +106,9 @@ export default function HeroSection() {
             <TypewriterComponent
               options={{
                 strings: [
-                  "Ai Models",
-                  "Ai Solutions",
+                  "AI Models",
+                  "AI Solutions",
                   "LLM's",
-                  "",
                 ],
                 autoStart: true,
                 loop: true,
