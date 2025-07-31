@@ -66,7 +66,7 @@ const techStack: TechItem[] = [
   // Automation
   { name: "AirTable", level: "proficient", category: "automation" },
   { name: "Make.com", level: "familiar", category: "automation" },
-  { name: "N8N", level: "expert", category: "automation" },
+  { name: "N8N", level: "familiar", category: "automation" },
 
   // Frontend
   { name: "StreamLit", level: "expert", category: "frontend" },
