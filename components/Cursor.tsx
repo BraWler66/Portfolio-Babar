@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Cursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const pos = useRef({ x: 0, y: 0 });
   const current = useRef({ x: 0, y: 0 });
   const rafRef = useRef<number>(0);
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
+    // Detect touch-primary devices (iPhones, iPads, Android)
+    const touchDevice = window.matchMedia("(pointer: coarse)").matches;
+    setIsTouch(touchDevice);
+    if (touchDevice) return;
+
     const handleMove = (e: MouseEvent) => {
       pos.current = { x: e.clientX, y: e.clientY };
     };
@@ -52,6 +58,8 @@ export default function Cursor() {
       cancelAnimationFrame(rafRef.current);
     };
   }, []);
+
+  if (isTouch) return null;
 
   return (
     <div

@@ -44,13 +44,13 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden grid grid-cols-2"
+      className="relative min-h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2"
       style={{ alignItems: "center" }}
     >
       {/* ── LEFT: Text content ─────────────────────────────────────── */}
       <div
         className="relative flex flex-col justify-center z-10"
-        style={{ padding: "120px 0 80px 60px" }}
+        style={{ padding: "clamp(80px, 12vh, 120px) clamp(20px, 5vw, 40px) clamp(40px, 6vh, 80px) clamp(24px, 6vw, 60px)" }}
       >
 
         {/* Hello label */}
@@ -108,7 +108,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 1 }}
-          style={{ fontSize: "clamp(14px, 1.4vw, 16px)", color: "var(--muted)", maxWidth: 420, lineHeight: 1.9, fontWeight: 300, marginBottom: 48 }}
+          style={{ fontSize: "clamp(14px, 1.4vw, 16px)", color: "var(--muted)", maxWidth: "min(420px, 90vw)", lineHeight: 1.9, fontWeight: 300, marginBottom: 48 }}
         >
           Building intelligent systems at the intersection of Machine Learning,
           Computer Vision, and NLP. Passionate about turning research into real-world impact.
@@ -136,7 +136,7 @@ export default function HeroSection() {
 
       {/* ── RIGHT: 3D model ──────────────────────────────────────── */}
       <div
-        className="relative"
+        className="relative hidden md:block"
         style={{ height: "100vh" }}
       >
         {/* Left edge fade so model blends into text side */}

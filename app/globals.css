@@ -60,11 +60,13 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: none;
 }
 
-/* ── Cursor ─────────────────────────────────────────────────── */
-* { cursor: none !important; }
+/* ── Cursor — desktop (mouse) only ─────────────────────────── */
+@media (pointer: fine) {
+  body { cursor: none; }
+  * { cursor: none !important; }
+}
 
 /* ── Scrollbar ──────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 0px; }
@@ -196,6 +198,29 @@ p[style*="fontSize: 12"] {
     line-height: 1.8;
   }
   .section-lead { font-size: 15px !important; line-height: 1.8 !important; }
+
+  /* Ensure nav links have minimum touch target height */
+  header nav a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Hero h1 tighter on small screens */
+  #home h1 {
+    font-size: clamp(36px, 10vw, 60px);
+  }
+}
+
+/* ── iPhone safe areas ──────────────────────────────────────── */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  header {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════

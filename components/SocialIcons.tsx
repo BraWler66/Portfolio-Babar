@@ -15,12 +15,12 @@ export default function SocialIcons() {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 1.5, duration: 0.6 }}
+      className="hidden md:flex"
       style={{
         position: "fixed",
         left: 24,
         bottom: 32,
         zIndex: 40,
-        display: "flex",
         flexDirection: "column",
         alignItems: "center",
         gap: 20,
