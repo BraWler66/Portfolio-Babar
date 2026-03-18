@@ -48,7 +48,8 @@ export default function Header() {
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: visible ? 0 : -80, opacity: 1 }}
       transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 sm:px-6 sm:py-5 md:px-8 md:py-6"
+      style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", background: "rgba(11,8,12,0.6)" }}
       style={{ color: "var(--text)" }}
     >
       {/* Logo */}

@@ -267,7 +267,7 @@ function JobCard({ job, idx }: { job: typeof JOBS[0]; idx: number }) {
           top: 0,
           bottom: 0,
           width: 1,
-          backgroundColor: `${job.color}25`,
+          backgroundColor: `${job.color}20`,
         }} />
 
         {/* Node + header row */}
@@ -319,7 +319,7 @@ function JobCard({ job, idx }: { job: typeof JOBS[0]; idx: number }) {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.33, 0, 0, 1], delay: 0.2 }}
-          style={{ paddingLeft: 52 }}
+          style={{ paddingLeft: 0 }}
         >
           <CardContent job={job} />
         </motion.div>
@@ -505,7 +505,7 @@ function CardContent({ job }: { job: typeof JOBS[0] }) {
               flexShrink: 0,
               marginTop: 7,
             }} />
-            <span style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.7, fontWeight: 300 }}>
+            <span style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.7, fontWeight: 300, wordBreak: "break-word", minWidth: 0 }}>
               {bullet}
             </span>
           </motion.div>

@@ -467,7 +467,7 @@ function MedicalBodyModel() {
 
         {/* ── Mobile layout ── */}
         <div className="md:hidden" style={{ position: "relative" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr min(220px, 55vw) 1fr", gap: 8, alignItems: "center", minHeight: 500 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr min(200px, 48vw) 1fr", gap: 6, alignItems: "center", minHeight: 500 }}>
 
             {/* Left labels */}
             <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-end" }}>
@@ -477,10 +477,10 @@ function MedicalBodyModel() {
                     textAlign: "right",
                     background: mobileModal === p.id ? "rgba(194,164,255,0.06)" : "rgba(11,8,12,0.5)",
                     border: `1px solid ${mobileModal === p.id ? "rgba(194,164,255,0.4)" : "rgba(194,164,255,0.15)"}`,
-                    borderRadius: 6, padding: "8px 10px", cursor: "pointer", transition: "all 0.25s", width: "100%",
+                    borderRadius: 6, padding: "6px 8px", cursor: "pointer", transition: "all 0.25s", width: "100%",
                   }}>
-                  <p style={{ fontSize: 10, letterSpacing: 2, color: "var(--pink)", textTransform: "uppercase", marginBottom: 4 }}>{p.sublabel}</p>
-                  <p style={{ fontSize: 13, fontWeight: 600, color: "var(--text)", lineHeight: 1.3 }}>{p.label}</p>
+                  <p style={{ fontSize: 9, letterSpacing: 1, color: "var(--pink)", textTransform: "uppercase", marginBottom: 3, wordBreak: "break-word" }}>{p.sublabel}</p>
+                  <p style={{ fontSize: 11, fontWeight: 600, color: "var(--text)", lineHeight: 1.3, wordBreak: "break-word" }}>{p.label}</p>
                 </button>
               ))}
             </div>
@@ -534,10 +534,10 @@ function MedicalBodyModel() {
                     textAlign: "left",
                     background: mobileModal === p.id ? "rgba(194,164,255,0.06)" : "rgba(11,8,12,0.5)",
                     border: `1px solid ${mobileModal === p.id ? "rgba(194,164,255,0.4)" : "rgba(194,164,255,0.15)"}`,
-                    borderRadius: 6, padding: "8px 10px", cursor: "pointer", transition: "all 0.25s", width: "100%",
+                    borderRadius: 6, padding: "6px 8px", cursor: "pointer", transition: "all 0.25s", width: "100%",
                   }}>
-                  <p style={{ fontSize: 10, letterSpacing: 2, color: "var(--pink)", textTransform: "uppercase", marginBottom: 4 }}>{p.sublabel}</p>
-                  <p style={{ fontSize: 13, fontWeight: 600, color: "var(--text)", lineHeight: 1.3 }}>{p.label}</p>
+                  <p style={{ fontSize: 9, letterSpacing: 1, color: "var(--pink)", textTransform: "uppercase", marginBottom: 3, wordBreak: "break-word" }}>{p.sublabel}</p>
+                  <p style={{ fontSize: 11, fontWeight: 600, color: "var(--text)", lineHeight: 1.3, wordBreak: "break-word" }}>{p.label}</p>
                 </button>
               ))}
             </div>
@@ -665,36 +665,40 @@ function AutonomousCarSection() {
       <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 clamp(16px, 5vw, 80px)" }}>
 
         {/* Header */}
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "clamp(40px, 6vw, 72px)", flexWrap: "wrap", gap: 16 }}>
-          <div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 16 }}>
-              <div style={{ width: 32, height: 1, backgroundColor: "var(--pink)" }} />
-              <p style={{ fontSize: 11, letterSpacing: 5, color: "var(--pink)", textTransform: "uppercase" }}>Reinforcement Learning</p>
-            </motion.div>
-            <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 300, letterSpacing: -1, lineHeight: 1.1 }}>
-              Autonomous <span style={{ color: "var(--pink)", fontWeight: 700 }}>Driving</span> RL
-            </motion.h2>
+        <div style={{ marginBottom: "clamp(40px, 6vw, 72px)" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+            <div>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 16 }}>
+                <div style={{ width: 32, height: 1, backgroundColor: "var(--pink)" }} />
+                <p style={{ fontSize: 11, letterSpacing: 5, color: "var(--pink)", textTransform: "uppercase" }}>Reinforcement Learning</p>
+              </motion.div>
+              <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} style={{ fontSize: "clamp(28px, 5vw, 64px)", fontWeight: 300, letterSpacing: -1, lineHeight: 1.1 }}>
+                Autonomous <span style={{ color: "var(--pink)", fontWeight: 700 }}>Driving</span> RL
+              </motion.h2>
+            </div>
+            <a
+              href="https://github.com/BraWler66/Autonomous-Driving-using-Reinforcement-Learning"
+              target="_blank" rel="noopener noreferrer"
+              style={{
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "10px 18px",
+                border: "1px solid rgba(194,164,255,0.35)",
+                borderRadius: 8,
+                color: "var(--pink)",
+                fontSize: 12,
+                letterSpacing: 1,
+                textDecoration: "none",
+                background: "rgba(194,164,255,0.05)",
+                transition: "all 0.2s",
+                flexShrink: 0,
+                alignSelf: "flex-start",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(194,164,255,0.1)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--pink)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(194,164,255,0.05)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(194,164,255,0.35)"; }}
+            >
+              <GithubIcon size={14} /> View
+            </a>
           </div>
-          <a
-            href="https://github.com/BraWler66/Autonomous-Driving-using-Reinforcement-Learning"
-            target="_blank" rel="noopener noreferrer"
-            style={{
-              display: "flex", alignItems: "center", gap: 8,
-              padding: "12px 24px",
-              border: "1px solid rgba(194,164,255,0.35)",
-              borderRadius: 8,
-              color: "var(--pink)",
-              fontSize: 13,
-              letterSpacing: 1,
-              textDecoration: "none",
-              background: "rgba(194,164,255,0.05)",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(194,164,255,0.1)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--pink)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(194,164,255,0.05)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(194,164,255,0.35)"; }}
-          >
-            <GithubIcon size={15} /> View on GitHub
-          </a>
         </div>
 
         {/* 2-column on desktop, stacked on mobile */}
@@ -721,9 +725,9 @@ function AutonomousCarSection() {
               ))}
             </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, maxWidth: "100%" }}>
               {["Reinforcement Learning", "CARLA", "DQN", "Computer Vision", "TensorBoard", "Python"].map((t) => (
-                <span key={t} style={{ fontSize: 11, color: "var(--pink)", border: "1px solid rgba(194,164,255,0.25)", padding: "4px 12px", borderRadius: 4, background: "rgba(194,164,255,0.05)" }}>{t}</span>
+                <span key={t} style={{ fontSize: 11, color: "var(--pink)", border: "1px solid rgba(194,164,255,0.25)", padding: "4px 10px", borderRadius: 4, background: "rgba(194,164,255,0.05)", whiteSpace: "nowrap" }}>{t}</span>
               ))}
             </div>
           </motion.div>
@@ -1086,15 +1090,15 @@ function VRTherapySection() {
             <div style={{ width: 32, height: 1, background: "linear-gradient(to right, var(--accent-dark), var(--accent))" }} />
             <p style={{ fontSize: 11, letterSpacing: 5, color: "var(--accent)", textTransform: "uppercase" }}>Final Year Project · FYP</p>
           </motion.div>
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 24 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-              style={{ fontSize: "clamp(28px, 4.5vw, 60px)", fontWeight: 300, letterSpacing: -1, lineHeight: 1.1, maxWidth: 700 }}>
+              style={{ fontSize: "clamp(24px, 4.5vw, 60px)", fontWeight: 300, letterSpacing: -1, lineHeight: 1.15 }}>
               AI-Powered{" "}
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>VR Therapy</span>
-              {" "}for <span style={{ color: "var(--accent)", fontWeight: 400, fontStyle: "italic" }}>Mental Health</span>
+              {" "}for{" "}<span style={{ color: "var(--accent)", fontWeight: 400, fontStyle: "italic" }}>Mental Health</span>
             </motion.h2>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
-              style={{ fontSize: 13, color: "var(--muted)", maxWidth: 300, lineHeight: 1.8, fontWeight: 300 }}>
+              style={{ fontSize: 13, color: "var(--muted)", maxWidth: 480, lineHeight: 1.8, fontWeight: 300 }}>
               Two interfaces — a web chatbot and an immersive Unity VR session — both powered by the same 6-agent AI pipeline.
             </motion.p>
           </div>
@@ -1116,30 +1120,28 @@ function VRTherapySection() {
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
 
           {/* Track switcher */}
-          <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", gap: 8 }}>
-              {(["chat", "vr"] as const).map((track) => (
-                <button key={track} onClick={() => { setActiveTrack(track); setIsPlaying(true); }}
-                  style={{
-                    padding: "8px 20px", borderRadius: 8, border: "1px solid",
-                    borderColor: activeTrack === track ? "var(--accent)" : "var(--border)",
-                    background: activeTrack === track ? "rgba(194,164,255,0.1)" : "transparent",
-                    color: activeTrack === track ? "var(--accent)" : "var(--muted)",
-                    fontSize: 12, fontWeight: 600, letterSpacing: 1, cursor: "pointer",
-                    transition: "all 0.2s",
-                    display: "flex", alignItems: "center", gap: 8,
-                  }}>
-                  {track === "chat" ? "💬" : "🥽"} {track === "chat" ? "WEB CHATBOT" : "VR SESSION"}
-                </button>
-              ))}
-            </div>
+          <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap", alignItems: "center" }}>
+            {(["chat", "vr"] as const).map((track) => (
+              <button key={track} onClick={() => { setActiveTrack(track); setIsPlaying(true); }}
+                style={{
+                  padding: "8px 14px", borderRadius: 8, border: "1px solid",
+                  borderColor: activeTrack === track ? "var(--accent)" : "var(--border)",
+                  background: activeTrack === track ? "rgba(194,164,255,0.1)" : "transparent",
+                  color: activeTrack === track ? "var(--accent)" : "var(--muted)",
+                  fontSize: 11, fontWeight: 600, letterSpacing: 0.8, cursor: "pointer",
+                  transition: "all 0.2s",
+                  display: "flex", alignItems: "center", gap: 6,
+                }}>
+                {track === "chat" ? "💬" : "🥽"} {track === "chat" ? "WEB CHATBOT" : "VR SESSION"}
+              </button>
+            ))}
             {/* Play/Pause */}
             <button onClick={() => setIsPlaying(p => !p)}
               style={{
-                padding: "6px 14px", borderRadius: 6, border: "1px solid var(--border)",
+                padding: "6px 12px", borderRadius: 6, border: "1px solid var(--border)",
                 background: "rgba(194,164,255,0.06)", color: "var(--accent)",
-                fontSize: 11, letterSpacing: 1, cursor: "pointer",
-                display: "flex", alignItems: "center", gap: 6,
+                fontSize: 10, letterSpacing: 0.8, cursor: "pointer",
+                display: "flex", alignItems: "center", gap: 5, marginLeft: "auto",
               }}>
               {isPlaying ? "⏸ PAUSE" : "▶ PLAY"}
             </button>
@@ -1319,8 +1321,9 @@ function VRTherapySection() {
         .vr-bar-3 { animation: vrBarGrow 0.8s ease-in-out infinite; animation-delay: 0.45s; }
         .vr-bar-4 { animation: vrBarGrow 0.8s ease-in-out infinite; animation-delay: 0.6s; }
         @media (max-width: 767px) {
-          .vr-workflow-grid { grid-template-columns: 1fr !important; }
+          .vr-workflow-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
           .vr-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .vr-workflow-grid > div:last-child { display: none; }
         }
       `}</style>
     </section>
