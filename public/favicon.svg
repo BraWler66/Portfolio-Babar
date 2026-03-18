@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#0b080c"/>
+  <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" stroke="#c2a4ff" stroke-width="1.2" fill="none"/>
+  <circle cx="16" cy="2" r="1.5" fill="#fb8dff"/>
+  <circle cx="28" cy="9" r="1.5" fill="#c2a4ff"/>
+  <circle cx="28" cy="23" r="1.5" fill="#7f40ff"/>
+  <circle cx="16" cy="30" r="1.5" fill="#fb8dff"/>
+  <circle cx="4" cy="23" r="1.5" fill="#c2a4ff"/>
+  <circle cx="4" cy="9" r="1.5" fill="#7f40ff"/>
+  <text x="16" y="21" font-family="Arial,sans-serif" font-weight="700" font-size="13" fill="#c2a4ff" text-anchor="middle">B</text>
+</svg>

@@ -2,7 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['kalehub.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'kalehub.com' },
+    ],
     formats: ['image/avif', 'image/webp'],
   },
   experimental: {

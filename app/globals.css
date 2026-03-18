@@ -1,69 +1,355 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
-@layer base {
+
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* ═══════════════════════════════════════════════════════════════
+   Design Tokens
+   Primary:   Lavender  #c2a4ff
+   Pink:      #fb8dff
+   Deep:      #7f40ff
+   Surface:   Deep purple-black  #08040f / #0d0818
+═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Colours */
+  --bg:           #0b080c;   /* original background — matches MoncyDev repo */
+  --surface:      #110d14;   /* card / panel surfaces */
+  --text:         #eae5ec;   /* original text color — matches MoncyDev repo */
+  --accent:       #c2a4ff;   /* PRIMARY — lavender — matches MoncyDev --accentColor */
+  --accent-dark:  #7f40ff;   /* deeper purple for glows */
+  --pink:         #fb8dff;   /* pink accent */
+  --violet:       #a78bfa;   /* secondary */
+  --violet-dark:  #7c3aed;   /* deeper violet */
+  --muted:        #8b7d96;   /* grey-mauve */
+  --border:       #1e1428;   /* dark border */
+  --cWidth:       calc(100% - 60px);
+
+  /* ── Type scale ── */
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 15px;
+  --text-md:   17px;
+  --text-lg:   20px;
+  --text-xl:   clamp(22px, 3vw, 32px);
+  --text-2xl:  clamp(32px, 5vw, 56px);
+  --text-3xl:  clamp(48px, 7vw, 88px);
+
+  /* ── Leading ── */
+  --leading-tight:   1.1;
+  --leading-snug:    1.4;
+  --leading-normal:  1.75;
+  --leading-relaxed: 1.9;
+
+  /* ── Tracking ── */
+  --tracking-label: 0.32em;
+}
+
+/* ── Reset ─────────────────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Geist', system-ui, sans-serif;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+}
+
+/* ── Cursor ─────────────────────────────────────────────────── */
+* { cursor: none !important; }
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 0px; }
+
+/* ── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: rgba(194, 164, 255, 0.2);
+  color: var(--text);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY SYSTEM
+═══════════════════════════════════════════════════════════════ */
+
+/* All section h2 */
+section h2 {
+  font-size: clamp(34px, 5.5vw, 68px);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: var(--text);
+}
+
+/* Bold accent word inside h2 */
+section h2 span[style*="fontWeight: 700"],
+section h2 span[style*="font-weight: 700"] {
+  font-weight: 800;
+}
+
+/* Section h3 */
+section h3 {
+  font-size: clamp(17px, 2.2vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+/* Hero h1 */
+#home h1 {
+  font-size: clamp(42px, 8vw, 108px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+/* Eyebrow labels */
+section > div p[style*="letterSpacing: 5"],
+section > div > div p[style*="letterSpacing: 5"],
+section p[style*="letterSpacing: 4"],
+section p[style*="letterSpacing: 3"] {
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Body paragraphs */
+section > div > p,
+section p[style*="var(--muted)"],
+section p[style*="lineHeight: 1.8"],
+section p[style*="lineHeight: 1.9"],
+section p[style*="lineHeight: 1.85"] {
+  font-size: clamp(14px, 1.5vw, 16px);
+  line-height: 1.85;
+  font-weight: 300;
+  color: var(--muted);
+  max-width: 68ch;
+}
+
+/* Card body */
+p[style*="fontSize: 13"],
+p[style*="fontSize: 14"] {
+  font-size: clamp(13px, 1.3vw, 15px);
+  line-height: 1.8;
+}
+
+/* Meta / small */
+p[style*="fontSize: 10"],
+p[style*="fontSize: '10"] {
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+}
+
+p[style*="fontSize: 12"] {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Hero description */
+#home p[style*="fontSize: 14"] {
+  font-size: clamp(14px, 1.4vw, 16px) !important;
+  line-height: 1.9 !important;
+}
+
+/* Hero typewriter */
+#home div[style*="clamp(16px, 3vw"] {
+  font-size: clamp(18px, 3vw, 44px) !important;
+}
+
+/* About big quote */
+#about p[style*="clamp(18"] {
+  font-size: clamp(20px, 3vw, 36px) !important;
+  line-height: 1.5 !important;
+  font-weight: 300 !important;
+}
+
+.section-lead {
+  font-size: clamp(16px, 2vw, 20px) !important;
+  line-height: 1.9 !important;
+  font-weight: 300 !important;
+  color: var(--muted) !important;
+}
+
+/* ── Mobile typography ──────────────────────────────────────── */
+@media (max-width: 767px) {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --text-base: 14px;
+    --text-md:   15px;
+    --text-lg:   17px;
   }
- 
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+  section h2 {
+    font-size: clamp(28px, 8vw, 44px);
+    letter-spacing: -0.02em;
+  }
+  section h3 { font-size: clamp(15px, 4vw, 18px); }
+  section > div > p,
+  section p[style*="var(--muted)"] {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .section-lead { font-size: 15px !important; line-height: 1.8 !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COLOUR UTILITY CLASSES
+═══════════════════════════════════════════════════════════════ */
+
+/* Gradient text — lavender to white */
+.gradient-text {
+  background: linear-gradient(135deg, #7f40ff, #c2a4ff, #eae5ec);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Purple-pink gradient text */
+.gradient-text-rv {
+  background: linear-gradient(135deg, #c2a4ff, #fb8dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Tag / chip */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(194, 164, 255, 0.25);
+  background: rgba(194, 164, 255, 0.07);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+.tag:hover {
+  background: rgba(194, 164, 255, 0.14);
+  border-color: rgba(194, 164, 255, 0.5);
+}
+
+/* Hover link animation */
+.hover-link {
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 1em;
+}
+.hover-link span {
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  line-height: 1;
+}
+.hover-link span:last-child {
+  color: var(--accent);
+  transform: translateY(0);
+  position: relative;
+  top: -1em;
+}
+.hover-link:hover span { transform: translateY(-100%); }
+
+/* Section base */
+section { position: relative; }
+
+/* ── Glow effects ───────────────────────────────────────────── */
+.glow-pink {
+  box-shadow: 0 0 40px rgba(251, 141, 255, 0.35), 0 0 80px rgba(194, 164, 255, 0.15);
+}
+.glow-violet {
+  box-shadow: 0 0 40px rgba(167, 139, 250, 0.3), 0 0 80px rgba(124, 58, 237, 0.12);
+}
+.glow-purple { box-shadow: 0 0 40px rgba(194, 164, 255, 0.3); }
+
+/* ═══════════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+═══════════════════════════════════════════════════════════════ */
+
+/* Tech Globe Section */
+.tech-globe-section {
+  height: 75vh;
+}
+@media (max-width: 768px) {
+  .tech-globe-section {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Globe fills top portion on mobile */
+  .tech-globe-canvas {
+    position: relative !important;
+    height: 60vw;
+    min-height: 280px;
+    max-height: 380px;
+  }
+  /* Hide left/right gradient on mobile — globe is centered */
+  .tech-globe-grad-lr {
+    display: none;
+  }
+  /* Text flows below globe */
+  .tech-globe-text {
+    position: relative !important;
+    inset: unset !important;
+    padding: 32px 24px 40px !important;
+    max-width: 100% !important;
+    background: linear-gradient(to bottom, transparent, #0b080c 20%);
   }
 }
- 
-@layer base {
-  * {
-    @apply border-border;
+
+/* Marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  animation: marquee 40s linear infinite;
+  white-space: nowrap;
+}
+
+/* Dashed border draw */
+@keyframes dashDraw {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Pulse glow */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(194, 164, 255, 0.5);
   }
-  body {
-    @apply bg-background text-foreground;
+  50% {
+    box-shadow: 0 0 28px rgba(194, 164, 255, 0.95), 0 0 56px rgba(127, 64, 255, 0.4);
   }
 }
+
+/* Blink cursor */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Float */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-15px); }
+}
+
+/* Spin */
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Twinkle (about section stars) */
+@keyframes twinkleAbout {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 0.9; transform: scale(1.6); }
+}
+
+/* Scrollbar track tiny accent line */
+::-webkit-scrollbar-thumb { background: var(--accent-dark); border-radius: 4px; }

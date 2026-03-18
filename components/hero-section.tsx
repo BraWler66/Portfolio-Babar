@@ -1,195 +1,195 @@
-"use client"
+"use client";
 
-import { useEffect, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { DownloadIcon, ArrowRightIcon } from "lucide-react"
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { motion } from "framer-motion"
-import TypewriterComponent from "typewriter-effect"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import { FaWhatsapp } from "react-icons/fa"
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 
+const HeroModel3D = dynamic(() => import("./HeroModel3D"), { ssr: false });
+
+const roles = ["AI Engineer", "ML Researcher", "Computer Vision Expert", "LLM Developer"];
 
 export default function HeroSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [display, setDisplay] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const updateMousePosition = (ev: MouseEvent) => {
-      if (!containerRef.current) return
-
-      const { clientX, clientY } = ev
-      const { left, top, width, height } = containerRef.current.getBoundingClientRect()
-
-      const x = (clientX - left) / width
-      const y = (clientY - top) / height
-
-      containerRef.current.style.setProperty("--mouse-x", `${x}`)
-      containerRef.current.style.setProperty("--mouse-y", `${y}`)
+    const role = roles[roleIndex];
+    let t: NodeJS.Timeout;
+    if (!deleting && display.length < role.length) {
+      t = setTimeout(() => setDisplay(role.slice(0, display.length + 1)), 70);
+    } else if (!deleting && display.length === role.length) {
+      t = setTimeout(() => setDeleting(true), 2200);
+    } else if (deleting && display.length > 0) {
+      t = setTimeout(() => setDisplay(display.slice(0, -1)), 35);
+    } else {
+      setDeleting(false);
+      setRoleIndex((i) => (i + 1) % roles.length);
     }
+    return () => clearTimeout(t);
+  }, [display, deleting, roleIndex]);
 
-    document.addEventListener("mousemove", updateMousePosition)
-    return () => {
-      document.removeEventListener("mousemove", updateMousePosition)
-    }
-  }, [])
+  const charVariants = {
+    hidden: { opacity: 0, y: 80, filter: "blur(5px)" },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { delay: i * 0.025, duration: 1.2, ease: [0.33, 0, 0, 1] as const },
+    }),
+  };
 
-  const skills = [
-    "Ai",
-    "Machine Learning",
-    "Data Analyst",
-    "LLM",
-    "Viz",
-    "Frontend",
-    "Automation",
-  ]
-
-
-  const socialLinks = [
-    {
-      name: "GitHub",
-      url: "https://github.com/BraWler66",
-      icon: FaGithub,
-    },
-    {
-      name: "LinkedIn",
-      url: "https://www.linkedin.com/in/babar1438",
-      icon: FaLinkedin,
-    },
-    // {
-    //   name: "Twitter",
-    //   url: "https://twitter.com",
-    //   icon: FaTwitter,
-    // },
-    {
-      name: "Whatsapp",
-      url: "https://wa.link/2xw5zy",
-      icon: FaWhatsapp,
-    },
-  ];
-
+  const name = "BABAR ALI".split("");
 
   return (
-    <>
-    <section id="home">
-    <div
-      ref={containerRef}
-      className="relative min-h-screen flex flex-col justify-center px-4 sm:px-6 overflow-hidden"
-      style={{
-        "--mouse-x": "0.5",
-        "--mouse-y": "0.5",
-      } as React.CSSProperties}
-      >
+    <section
+      id="home"
+      className="relative min-h-screen overflow-hidden grid grid-cols-2"
+      style={{ alignItems: "center" }}
+    >
+      {/* ── LEFT: Text content ─────────────────────────────────────── */}
       <div
-        className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_calc(50%+var(--mouse-x)*40%)_calc(50%+var(--mouse-y)*40%),hsl(var(--primary)/10%),transparent_50%)]"
-        aria-hidden="true"
-      />
+        className="relative flex flex-col justify-center z-10"
+        style={{ padding: "120px 0 80px 60px" }}
+      >
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="container relative z-10 max-w-4xl mx-auto text-center md:text-left pt-20"
+        {/* Hello label */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          style={{ fontSize: 13, color: "var(--accent)", letterSpacing: "0.3em", marginBottom: 16, fontWeight: 400, textTransform: "uppercase" }}
         >
+          Hello! I&apos;m
+        </motion.p>
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-          Hi, I&apos;m{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-chart-2 hover:from-chart-2 hover:to-primary transition-all duration-300">
-            Babar Ali
-          </span>
+        {/* Name */}
+        <h1
+          style={{
+            fontSize: "clamp(38px, 7vw, 100px)",
+            fontWeight: 500,
+            letterSpacing: 2,
+            lineHeight: 1,
+            marginBottom: 16,
+            display: "flex",
+            flexWrap: "wrap",
+          }}
+        >
+          {name.map((char, i) => (
+            <motion.span
+              key={i}
+              custom={i}
+              variants={charVariants}
+              initial="hidden"
+              animate="visible"
+              style={{ display: "inline-block", whiteSpace: "pre" }}
+            >
+              {char}
+            </motion.span>
+          ))}
         </h1>
 
-        <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-muted-foreground mb-6 flex flex-col md:flex-row md:items-center gap-2 justify-center md:justify-start">
-          <span>I build</span>
-          <span className="text-primary h-8 md:h-10">
-            <TypewriterComponent
-              options={{
-                strings: [
-                  "AI Models",
-                  "AI Solutions",
-                  "LLM's",
-                ],
-                autoStart: true,
-                loop: true,
-                deleteSpeed: 50,
-                delay: 50,
-              }}
-              />
-          </span>
-        </h2>
-
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto md:mx-0 mb-6 leading-relaxed">
-          I explore the intersection of creativity and artificial intelligence—building tools, learning systems, and helping others understand how AI shapes our future.
-        </p>
-
-        <div className="flex flex-wrap gap-2 justify-center md:justify-start mb-8">
-          {skills.map((skill) => (
-            <Badge
-            key={skill}
-            variant="secondary"
-            className={cn(
-              "px-3 py-1 text-xs font-medium rounded-full transition-all duration-300 hover:scale-105",
-              skill === "Ai" && "bg-chart-1/20 text-chart-1 hover:bg-chart-1/30",
-              skill === "Frontend" && "bg-chart-1/20 text-chart-1 hover:bg-chart-1/30",
-              skill === "Machine Learning" && "bg-chart-2/20 text-chart-2 hover:bg-chart-2/30",
-              skill === "Viz" && "bg-chart-2/20 text-chart-2 hover:bg-chart-2/30",
-                skill === "Data Analyst" && "bg-chart-3/20 text-chart-3 hover:bg-chart-3/30",
-                skill === "LLM" && "bg-chart-4/20 text-chart-4 hover:bg-chart-4/30",
-                skill === "Automation" && "bg-chart-4/20 text-chart-4 hover:bg-chart-4/30",
-              )}
-              >
-              {skill}
-            </Badge>
-          ))}
+        {/* Role typewriter */}
+        <div
+          style={{
+            fontSize: "clamp(16px, 3vw, 40px)",
+            fontWeight: 300,
+            color: "var(--muted)",
+            marginBottom: 32,
+            minHeight: "1.2em",
+          }}
+        >
+          <span style={{ color: "var(--accent)" }}>{display}</span>
+          <span style={{ animation: "blink 1s step-end infinite", color: "var(--accent)" }}>|</span>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-8">
-          <Button className="group hover:scale-105 transition-transform">
-            <Link href="#projects">View Projects</Link>
-            <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Button>
-          <Button variant="outline" asChild className="hover:scale-105 transition-transform">
-            <Link href="/babar-ali-resume.pdf" target="_blank" download>
-              Resume
-              <DownloadIcon className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 1 }}
+          style={{ fontSize: "clamp(14px, 1.4vw, 16px)", color: "var(--muted)", maxWidth: 420, lineHeight: 1.9, fontWeight: 300, marginBottom: 48 }}
+        >
+          Building intelligent systems at the intersection of Machine Learning,
+          Computer Vision, and NLP. Passionate about turning research into real-world impact.
+        </motion.p>
 
-        <div className="flex gap-4 justify-center md:justify-start">
-          {socialLinks.map((link) => (
-            <Link
-            key={link.name}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-              >
-              <span className="sr-only">{link.name}</span>
-              <link.icon className="text-xl" />
-            </Link>
-          ))}
-
-        </div>
-      </motion.div>
-
-      <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-        <span className="text-muted-foreground text-sm mb-2">Scroll to explore</span>
+        {/* Scroll indicator */}
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center"
-          >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-1 h-2 bg-primary rounded-full mt-2"
-            />
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="flex items-center gap-3"
+          style={{ color: "var(--muted)", fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase" }}
+        >
+          <div style={{ width: 40, height: 1, backgroundColor: "var(--border)" }} />
+          SCROLL
+          <div
+            style={{
+              width: 6, height: 6, borderRadius: "50%",
+              backgroundColor: "var(--accent)",
+              animation: "pulseGlow 2s ease-in-out infinite",
+            }}
+          />
         </motion.div>
       </div>
-    </div>
+
+      {/* ── RIGHT: 3D model ──────────────────────────────────────── */}
+      <div
+        className="relative"
+        style={{ height: "100vh" }}
+      >
+        {/* Left edge fade so model blends into text side */}
+        <div
+          className="absolute inset-y-0 left-0 w-32 pointer-events-none"
+          style={{
+            background: "linear-gradient(to right, #0b080c, transparent)",
+            zIndex: 2,
+          }}
+        />
+        {/* Bottom fade */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
+          style={{
+            background: "linear-gradient(to top, #0b080c, transparent)",
+            zIndex: 2,
+          }}
+        />
+        {/* Top fade */}
+        <div
+          className="absolute inset-x-0 top-0 h-32 pointer-events-none"
+          style={{
+            background: "linear-gradient(to bottom, #0b080c, transparent)",
+            zIndex: 2,
+          }}
+        />
+
+        {/* Glow behind model */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            top: "50%", left: "40%",
+            transform: "translate(-50%, -50%)",
+            width: 500, height: 500,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(194,164,255,0.12) 0%, transparent 65%)",
+            animation: "floatY 8s ease-in-out infinite",
+          }}
+        />
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            top: "40%", left: "60%",
+            transform: "translate(-50%, -50%)",
+            width: 300, height: 300,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(127,64,255,0.15) 0%, transparent 70%)",
+            animation: "floatY 6s ease-in-out infinite 2s",
+          }}
+        />
+
+        <HeroModel3D />
+      </div>
     </section>
-            </>
-  )
+  );
 }

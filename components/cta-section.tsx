@@ -2,258 +2,213 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Github,
-  Linkedin,
-  Mail,
-  MessageSquare,
-  Send,
-} from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { FaWhatsapp } from "react-icons/fa";
-import { Toaster, toast } from "react-hot-toast";
+import { Github, Linkedin, MessageCircle } from "lucide-react";
 
 export default function CTASection() {
-  const [activeTab, setActiveTab] = useState<"contact" | "hire" | "collaborate">("contact");
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    project: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const toastId = toast.loading("Sending message...");
-
+    setStatus("loading");
     try {
-      const response = await fetch("https://formspree.io/f/mvgreeod", {
+      const res = await fetch("https://formspree.io/f/mvgreeod", {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
-        body: new FormData(e.currentTarget),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
-        toast.success("✅ Message sent successfully!", { id: toastId });
-        setFormData({ name: "", email: "", company: "", project: "", message: "" });
-      } else {
-        toast.error("❌ Failed to send message.", { id: toastId });
+      setStatus(res.ok ? "success" : "error");
+      if (res.ok) {
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
       }
-    } catch (error) {
-      toast.error("❌ Something went wrong.", { id: toastId });
+    } catch {
+      setStatus("error");
     }
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 bg-accent/10">
-      <Toaster position="top-right" reverseOrder={false} />
-      <div className="container max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Have a project idea, collaboration opportunity, or just want to chat about AI and emerging technologies?
-              I&apos;m always open to connecting with fellow researchers, developers, and creators.
-            </p>
-          </div>
+    <section id="contact" className="py-32" style={{ borderTop: "1px solid var(--border)" }}>
+      <div className="max-w-[1300px] mx-auto px-8">
+        {/* Big CTA headline */}
+        <div className="mb-20">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ fontSize: 12, letterSpacing: 4, color: "var(--muted)", textTransform: "uppercase", marginBottom: 20 }}
+          >
+            Get In Touch
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            style={{
+              fontSize: "clamp(40px, 8vw, 100px)",
+              fontWeight: 300,
+              letterSpacing: -1,
+              lineHeight: 1,
+              color: "var(--text)",
+            }}
+          >
+            Let&apos;s Build
+            <br />
+            <span className="gradient-text">Something Great</span>
+          </motion.h2>
+        </div>
 
-          <div className="flex flex-col md:flex-row gap-10">
-            <div className="md:w-5/12">
-              <Card className="h-full bg-card/70 backdrop-blur">
-                <CardHeader>
-                  <CardTitle>Connect with Me</CardTitle>
-                  <CardDescription>Choose how you&apos;d like to reach out</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <a
-                    href="mailto:pratikkale7661@gmail.com"
-                    className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-accent"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                      <Mail className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium">Email</h3>
-                      <p className="text-sm text-muted-foreground">babar.ali63101@gmail.com</p>
-                    </div>
-                  </a>
-
-                  <a
-                    href="https://wa.link/2xw5zy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-accent"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                      <FaWhatsapp className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium">Whatsapp</h3>
-                      <p className="text-sm text-muted-foreground">@Babar Ali</p>
-                    </div>
-                  </a>
-
-                  <a
-                    href="https://github.com/BraWler66"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-accent"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                      <Github className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium">GitHub</h3>
-                      <p className="text-sm text-muted-foreground">github.com/BraWler66</p>
-                    </div>
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/babar1438"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-accent"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                      <Linkedin className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium">LinkedIn</h3>
-                      <p className="text-sm text-muted-foreground">linkedin.com/in/babar1438</p>
-                    </div>
-                  </a>
-                </CardContent>
-              </Card>
+        <div className="grid lg:grid-cols-2 gap-20">
+          {/* Left: contact info */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-10"
+          >
+            <div>
+              <p style={{ fontSize: 11, letterSpacing: 4, color: "var(--muted)", textTransform: "uppercase", marginBottom: 12 }}>Email</p>
+              <a
+                href="mailto:babar.ali63101@gmail.com"
+                className="hover-link"
+                style={{ fontSize: "clamp(16px, 2vw, 22px)", fontWeight: 300 }}
+              >
+                <span>babar.ali63101@gmail.com</span>
+                <span>babar.ali63101@gmail.com</span>
+              </a>
             </div>
 
-            <div className="md:w-7/12">
-              <Card className="bg-card/70 backdrop-blur">
-                <CardHeader>
-                  <div className="flex border border-border rounded-lg p-1 mb-4">
-                    {["contact", "hire", "collaborate"].map((tab) => (
-                      <button
-                        key={tab}
-                        className={cn(
-                          "flex-1 text-center py-2 rounded-md transition-colors capitalize",
-                          activeTab === tab ? "bg-primary text-primary-foreground" : "hover:bg-accent"
-                        )}
-                        onClick={() => setActiveTab(tab as typeof activeTab)}
-                      >
-                        {tab}
-                      </button>
-                    ))}
-                  </div>
-
-                  <CardTitle>
-                    {activeTab === "contact" && "Send a Message"}
-                    {activeTab === "hire" && "Work with Me"}
-                    {activeTab === "collaborate" && "Let's Build Together"}
-                  </CardTitle>
-                  <CardDescription>
-                    {activeTab === "contact" && "I'll get back to you as soon as possible"}
-                    {activeTab === "hire" && "Tell me about your project or position"}
-                    {activeTab === "collaborate" && "Share your idea and how we can collaborate"}
-                  </CardDescription>
-                </CardHeader>
-
-                <form onSubmit={handleSubmit}>
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium">Name</label>
-                        <Input id="name" name="name" placeholder="Your name" required value={formData.name} onChange={handleChange} />
-                      </div>
-                      <div className="space-y-2">
-                        <label htmlFor="email" className="text-sm font-medium">Email</label>
-                        <Input id="email" name="email" type="email" placeholder="Your email" required value={formData.email} onChange={handleChange} />
-                      </div>
-                    </div>
-
-                    {activeTab === "hire" && (
-                      <div className="space-y-2">
-                        <label htmlFor="company" className="text-sm font-medium">Company / Organization</label>
-                        <Input id="company" name="company" placeholder="Company or organization name" value={formData.company} onChange={handleChange} />
-                      </div>
-                    )}
-
-                    {activeTab === "collaborate" && (
-                      <div className="space-y-2">
-                        <label htmlFor="project" className="text-sm font-medium">Project Name</label>
-                        <Input id="project" name="project" placeholder="Name of your project" value={formData.project} onChange={handleChange} />
-                      </div>
-                    )}
-
-                    <div className="space-y-2">
-                      <label htmlFor="message" className="text-sm font-medium">Message</label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        placeholder={
-                          activeTab === "contact"
-                            ? "Your message..."
-                            : activeTab === "hire"
-                            ? "Tell me about your project or position..."
-                            : "Share your collaboration idea..."
-                        }
-                        className="min-h-[120px]"
-                        required
-                        value={formData.message}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </CardContent>
-
-                  <CardFooter>
-                    <Button type="submit" className="w-full group">
-                      {activeTab === "contact" && (
-                        <>
-                          Send Message
-                          <MessageSquare className="ml-2 h-4 w-4 group-hover:animate-pulse" />
-                        </>
-                      )}
-                      {activeTab === "hire" && (
-                        <>
-                          Submit Inquiry
-                          <Send className="ml-2 h-4 w-4 group-hover:animate-pulse" />
-                        </>
-                      )}
-                      {activeTab === "collaborate" && (
-                        <>
-                          Let&apos;s Collaborate
-                          <Send className="ml-2 h-4 w-4 group-hover:animate-pulse" />
-                        </>
-                      )}
-                    </Button>
-                  </CardFooter>
-                </form>
-              </Card>
+            <div>
+              <p style={{ fontSize: 11, letterSpacing: 4, color: "var(--muted)", textTransform: "uppercase", marginBottom: 16 }}>Socials</p>
+              <div className="flex gap-6">
+                {[
+                  { icon: Github, href: "https://github.com/BraWler66", label: "GitHub" },
+                  { icon: Linkedin, href: "https://www.linkedin.com/in/babar1438", label: "LinkedIn" },
+                  { icon: MessageCircle, href: "https://wa.link/2xw5zy", label: "WhatsApp" },
+                ].map(({ icon: Icon, href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover-link"
+                    style={{ fontSize: 13, letterSpacing: 2 }}
+                  >
+                    <span style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon size={16} />{label}</span>
+                    <span style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon size={16} />{label}</span>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        </motion.div>
+
+            <div style={{ paddingTop: 20 }}>
+              <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.8, fontWeight: 300, maxWidth: 380 }}>
+                Open for AI/ML roles, freelance projects, and research collaborations. Whether you have a project in mind or just want to connect — my inbox is always open.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Right: form */}
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-6"
+          >
+            {[
+              { name: "name", label: "Name", type: "text", placeholder: "Your name" },
+              { name: "email", label: "Email", type: "email", placeholder: "your@email.com" },
+            ].map((field) => (
+              <div key={field.name}>
+                <label style={{ fontSize: 11, letterSpacing: 3, color: "var(--muted)", textTransform: "uppercase", display: "block", marginBottom: 8 }}>
+                  {field.label}
+                </label>
+                <input
+                  type={field.type}
+                  required
+                  value={(formData as Record<string, string>)[field.name]}
+                  onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
+                  placeholder={field.placeholder}
+                  style={{
+                    width: "100%",
+                    background: "transparent",
+                    border: "none",
+                    borderBottom: "1px solid var(--border)",
+                    color: "var(--text)",
+                    fontSize: 16,
+                    fontFamily: "inherit",
+                    padding: "12px 0",
+                    outline: "none",
+                    fontWeight: 300,
+                    transition: "border-color 0.3s",
+                  }}
+                  onFocus={(e) => (e.currentTarget.style.borderBottomColor = "var(--accent)")}
+                  onBlur={(e) => (e.currentTarget.style.borderBottomColor = "var(--border)")}
+                />
+              </div>
+            ))}
+
+            <div>
+              <label style={{ fontSize: 11, letterSpacing: 3, color: "var(--muted)", textTransform: "uppercase", display: "block", marginBottom: 8 }}>
+                Message
+              </label>
+              <textarea
+                required
+                rows={4}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                placeholder="Tell me about your project..."
+                style={{
+                  width: "100%",
+                  background: "transparent",
+                  border: "none",
+                  borderBottom: "1px solid var(--border)",
+                  color: "var(--text)",
+                  fontSize: 16,
+                  fontFamily: "inherit",
+                  padding: "12px 0",
+                  outline: "none",
+                  fontWeight: 300,
+                  resize: "none",
+                  transition: "border-color 0.3s",
+                }}
+                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "var(--accent)")}
+                onBlur={(e) => (e.currentTarget.style.borderBottomColor = "var(--border)")}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={status === "loading" || status === "success"}
+              style={{
+                background: "transparent",
+                border: "1px solid var(--border)",
+                color: "var(--text)",
+                padding: "14px 40px",
+                borderRadius: 50,
+                fontSize: 12,
+                letterSpacing: 3,
+                textTransform: "uppercase",
+                fontFamily: "inherit",
+                transition: "all 0.3s",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--accent)";
+                (e.currentTarget as HTMLButtonElement).style.color = "var(--accent)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
+                (e.currentTarget as HTMLButtonElement).style.color = "var(--text)";
+              }}
+            >
+              {status === "loading" ? "Sending..." : status === "success" ? "Sent ✓" : "Send Message"}
+            </button>
+          </motion.form>
+        </div>
       </div>
     </section>
   );

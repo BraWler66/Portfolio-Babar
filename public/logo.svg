@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Outer hexagon ring -->
+  <polygon points="24,2 44,13 44,35 24,46 4,35 4,13" stroke="#c2a4ff" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <!-- Inner hexagon -->
+  <polygon points="24,8 38,16 38,32 24,40 10,32 10,16" stroke="#c2a4ff" stroke-width="0.8" fill="none" opacity="0.2"/>
+  <!-- Neural lines -->
+  <line x1="24" y1="2" x2="24" y2="8" stroke="#c2a4ff" stroke-width="0.8" opacity="0.6"/>
+  <line x1="44" y1="13" x2="38" y2="16" stroke="#c2a4ff" stroke-width="0.8" opacity="0.6"/>
+  <line x1="44" y1="35" x2="38" y2="32" stroke="#c2a4ff" stroke-width="0.8" opacity="0.6"/>
+  <line x1="24" y1="46" x2="24" y2="40" stroke="#c2a4ff" stroke-width="0.8" opacity="0.6"/>
+  <line x1="4" y1="35" x2="10" y2="32" stroke="#c2a4ff" stroke-width="0.8" opacity="0.6"/>
+  <line x1="4" y1="13" x2="10" y2="16" stroke="#c2a4ff" stroke-width="0.8" opacity="0.6"/>
+  <!-- B letter mark -->
+  <text x="24" y="31" font-family="Arial,sans-serif" font-weight="700" font-size="18" fill="#c2a4ff" text-anchor="middle" letter-spacing="0">B</text>
+  <!-- Corner dots -->
+  <circle cx="24" cy="2" r="1.8" fill="#fb8dff"/>
+  <circle cx="44" cy="13" r="1.8" fill="#c2a4ff"/>
+  <circle cx="44" cy="35" r="1.8" fill="#7f40ff"/>
+  <circle cx="24" cy="46" r="1.8" fill="#fb8dff"/>
+  <circle cx="4" cy="35" r="1.8" fill="#c2a4ff"/>
+  <circle cx="4" cy="13" r="1.8" fill="#7f40ff"/>
+</svg>

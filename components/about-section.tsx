@@ -1,189 +1,169 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Code2, Users, Rocket } from "lucide-react"
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function AboutSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+
   return (
-    <section id="about" className="py-20 md:py-32 relative">
-      <div className="container max-w-5xl">
+    <section
+      id="about"
+      ref={sectionRef}
+      className="relative overflow-hidden"
+      style={{
+        position: "relative",
+        borderTop: "1px solid var(--border)",
+        padding: "clamp(60px, 10vw, 120px) 0 clamp(70px, 12vw, 140px)",
+      }}
+    >
+      {/* Ambient glows */}
+      <motion.div style={{ y: bgY }} className="absolute inset-0 pointer-events-none">
+        <div style={{ position: "absolute", top: "0%", right: "-5%", width: 700, height: 700, borderRadius: "50%", background: "radial-gradient(circle, rgba(127,64,255,0.07) 0%, transparent 65%)" }} />
+        <div style={{ position: "absolute", bottom: "0%", left: "-5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(194,164,255,0.04) 0%, transparent 70%)" }} />
+        <div style={{ position: "absolute", top: "40%", left: "30%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(194,164,255,0.03) 0%, transparent 60%)" }} />
+      </motion.div>
+
+      {/* Star dots */}
+      {[...Array(16)].map((_, i) => (
+        <div key={i} style={{
+          position: "absolute",
+          width: i % 4 === 0 ? 2 : 1, height: i % 4 === 0 ? 2 : 1,
+          borderRadius: "50%",
+          backgroundColor: i % 3 === 0 ? "rgba(194,164,255,0.5)" : i % 3 === 1 ? "rgba(194,164,255,0.3)" : "rgba(127,64,255,0.4)",
+          left: `${(i * 19 + 5) % 95}%`,
+          top: `${(i * 27 + 11) % 88}%`,
+          animation: `twinkleAbout ${2 + (i % 3)}s ease-in-out infinite ${i * 0.25}s`,
+          pointerEvents: "none",
+        }} />
+      ))}
+
+      <div
+        className="relative"
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "0 clamp(20px, 6vw, 80px)",
+          zIndex: 2,
+        }}
+      >
+
+        {/* Label */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.6 }}
+          style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 40 }}
         >
-          <h2 className="text-3xl font-bold mb-6">
-            <span className="font-mono text-primary">#</span> About Me
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-            <div className="md:col-span-7">
-              <p className="text-lg mb-8 text-muted-foreground leading-relaxed">
-                I&apos;m an AI enthusiast with a passion for building intelligent systems. I love creating machine learning models, analyzing complex datasets, and solving real-world problems through data-driven solutions. Currently exploring the intersection of AI, data science, and product development.
-              </p>
-
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-                {/* 1 */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-accent/30 rounded-xl p-6 border border-border/50"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <ArrowRight className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold">Education</h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    Bachelors in Artificial Intelligence from Bahria University Pakistan.
-                  </p>
-                </motion.div>
-                {/* 2 */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-accent/30 rounded-xl p-6 border border-border/50"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <ArrowRight className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold">Programming Language</h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    Proficient in Python for AI, machine learning, and data analysis, with expertise in libraries like TensorFlow, PyTorch, and Pandas.
-                  </p>
-                </motion.div>
-                {/* 3 */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-accent/30 rounded-xl p-6 border border-border/50"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <ArrowRight className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold">Current Focus</h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    Exploring AI technologies and contributing to open-source projects in the AI and machine learning space.
-                  </p>
-                </motion.div>
-                {/* 4 */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-accent/30 rounded-xl p-6 border border-border/50"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <ArrowRight className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold">Open to Opportunities</h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    Eager to collaborate on AI/ML projects, open-source contributions, or research roles where I can leverage my Python and machine learning expertise.
-                  </p>
-                </motion.div>
-
-                {/* <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-accent/30 rounded-xl p-6 border border-border/50"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <ArrowRight className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold">Current Focus</h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    Exploring AI + Blockchain integration and contributing to open-source projects in the Web3 space.
-                  </p>
-                </motion.div> */}
-              </div>
-            </div>
-
-            <div className="md:col-span-5">
-              <div className="bg-accent/50 rounded-xl p-6 space-y-6 border border-border/50">
-                <div>
-                  <h4 className="font-mono text-sm text-muted-foreground mb-3">
-                    $ background
-                  </h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 group hover:bg-accent/30 p-3 rounded-lg transition-all duration-300">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <span className="text-primary text-sm">→</span>
-                      </div>
-                      <div>
-                        <p className="font-medium">Machine Learning</p>
-                        <p className="text-sm text-muted-foreground">2+ years experience (academic)</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 group hover:bg-accent/30 p-3 rounded-lg transition-all duration-300">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <span className="text-primary text-sm">→</span>
-                      </div>
-                      <div>
-                        <p className="font-medium">Data Analyst</p>
-                        <p className="text-sm text-muted-foreground">1+ years experience (academic)</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-mono text-sm text-muted-foreground mb-3">
-                    $ achievements
-                  </h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 group hover:bg-accent/30 p-3 rounded-lg transition-all duration-300">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <span className="text-primary text-sm p-2">→</span>
-                      </div>
-                      <div>
-                        <p className="font-medium mx-2">Developed Medical Imaging Models with YOLOv8</p>
-                        <p className="text-sm text-muted-foreground"></p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 group hover:bg-accent/30 p-3 rounded-lg transition-all duration-300">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <span className="text-primary text-sm p-2">→</span>
-                      </div>
-                      <div>
-                        <p className="font-medium mx-2">Created Autonomous Driving Agent in CARLA</p>
-                        <p className="text-sm text-muted-foreground"></p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 group hover:bg-accent/30 p-3 rounded-lg transition-all duration-300">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <span className="text-primary text-sm p-2">→</span>
-                      </div>
-                      <div>
-                        <p className="font-medium mx-2">Designed NLP Pipeline for Event Extraction</p>
-                        <p className="text-sm text-muted-foreground"></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-mono text-sm text-muted-foreground mb-3">
-                    $ interests
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline" className="hover:bg-primary/10 transition-colors">Ai Models</Badge>
-                    <Badge variant="outline" className="hover:bg-primary/10 transition-colors">Machine Learning</Badge>
-                    <Badge variant="outline" className="hover:bg-primary/10 transition-colors">Automation</Badge>
-                    <Badge variant="outline" className="hover:bg-primary/10 transition-colors">Open Source</Badge>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div style={{ width: 40, height: 1, backgroundColor: "var(--accent)" }} />
+          <p style={{ fontSize: 11, letterSpacing: 6, color: "var(--accent)", textTransform: "uppercase", fontWeight: 500 }}>
+            About Me
+          </p>
         </motion.div>
+
+        {/* Two column on md+, single column on mobile */}
+        <div
+          className="grid grid-cols-1 md:grid-cols-2"
+          style={{ gap: "clamp(32px, 5vw, 80px)", alignItems: "start", marginBottom: 80 }}
+        >
+
+          {/* Headline */}
+          <motion.h2
+            initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 1, ease: [0.33, 0, 0, 1] }}
+            style={{ fontSize: "clamp(36px, 5vw, 72px)", fontWeight: 300, lineHeight: 1.1, letterSpacing: -2, color: "var(--text)" }}
+          >
+            I build{" "}
+            <span style={{ color: "var(--accent)", fontWeight: 700 }}>intelligent</span>
+            <br />systems that{" "}
+            <span style={{ color: "var(--pink)", fontStyle: "italic", fontWeight: 400 }}>think</span>.
+          </motion.h2>
+
+          {/* Bio + facts */}
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}
+              style={{ fontSize: 16, color: "var(--muted)", lineHeight: 1.95, fontWeight: 300, marginBottom: 48 }}
+            >
+              From detecting tumors in medical scans to training autonomous agents in
+              simulation — I bridge cutting-edge research with real-world deployment.
+              I live at the intersection of{" "}
+              <span style={{ color: "var(--accent)", fontWeight: 400 }}>Computer Vision</span>,{" "}
+              <span style={{ color: "var(--pink)" }}>LLMs</span>, and{" "}
+              <span style={{ color: "var(--accent)", fontWeight: 400 }}>Reinforcement Learning</span>.
+            </motion.p>
+
+            {/* Quick facts — always 2 columns */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.35 }}
+              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "28px 40px", paddingTop: 32, borderTop: "1px solid var(--border)" }}
+            >
+              {[
+                { label: "Education", value: "BS Artificial Intelligence", sub: "Bahria University" },
+                { label: "Experience", value: "1.5+ Years", sub: "AI / ML Engineering" },
+                { label: "Location", value: "Islamabad, PK", sub: "Open to Remote" },
+                { label: "Status", value: "Open to Work", sub: "Full-time · Contract" },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.08, duration: 0.5 }}
+                >
+                  <span style={{ fontSize: 10, letterSpacing: 4, color: "var(--muted)", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
+                    {item.label}
+                  </span>
+                  <span style={{ fontSize: 15, color: "var(--text)", fontWeight: 600, display: "block", marginBottom: 3 }}>
+                    {item.value}
+                  </span>
+                  <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 300, display: "block" }}>
+                    {item.sub}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Available badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }} transition={{ delay: 0.7, duration: 0.5 }}
+              style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 40 }}
+            >
+              <div style={{
+                width: 8, height: 8, borderRadius: "50%",
+                backgroundColor: "#44ffaa",
+                boxShadow: "0 0 12px rgba(68,255,170,0.8)",
+                animation: "pulseGlow 2s ease-in-out infinite",
+              }} />
+              <span style={{ fontSize: 12, color: "#44ffaa", letterSpacing: 3, textTransform: "uppercase", fontWeight: 400 }}>
+                Available for opportunities
+              </span>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Bottom accent line */}
+        <motion.div
+          initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }} transition={{ duration: 1.2, ease: [0.33, 0, 0, 1] }}
+          style={{
+            height: 1,
+            background: "linear-gradient(to right, transparent, var(--accent), var(--pink), transparent)",
+            transformOrigin: "left",
+          }}
+        />
       </div>
+
+      <style>{`
+        @keyframes twinkleAbout {
+          0%, 100% { opacity: 0.2; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.6); }
+        }
+      `}</style>
     </section>
-  )
+  );
 }

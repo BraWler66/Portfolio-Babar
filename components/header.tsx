@@ -1,189 +1,107 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ModeToggle } from "@/components/mode-toggle"
-import {
-  GithubIcon,
-  LinkedinIcon,
-  TwitterIcon,
-  Menu,
-  X,
-} from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { FaWhatsapp } from "react-icons/fa"
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-type NavItem = {
-  href: string
-  label: string
+const navItems = [
+  { label: "ABOUT", href: "#about" },
+  { label: "WORK", href: "#experience" },
+  { label: "CONTACT", href: "#contact" },
+];
+
+function HoverLink({ href, children }: { href: string; children: string }) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const id = href.replace("#", "");
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  return (
+    <a
+      href={href}
+      onClick={handleClick}
+      className="hover-link"
+      style={{ fontSize: "clamp(10px, 1.5vw, 13px)", letterSpacing: 2, fontWeight: 400 }}
+    >
+      <span>{children}</span>
+      <span>{children}</span>
+    </a>
+  );
 }
 
-const navItems: NavItem[] = [
-  { href: "#home", label: "Home" },
-  { href: "#projects", label: "Projects" },
-  { href: "#tech-stack", label: "Tech Stack" },
-  { href: "#contact", label: "Contact" },
-]
+export default function Header() {
+  const [visible, setVisible] = useState(true);
+  const [lastScroll, setLastScroll] = useState(0);
 
-export default function Header(): JSX.Element {
-  const [isScrolled, setIsScrolled] = React.useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-  const pathname = usePathname()
-
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const handleSmoothScroll = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    if (href.startsWith("#")) {
-      e.preventDefault()
-      const targetId = href.replace("#", "")
-      const targetElement = document.getElementById(targetId)
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "smooth" })
-        setIsMobileMenuOpen(false)
-      }
-    }
-  }
+      const current = window.scrollY;
+      setVisible(current < lastScroll || current < 100);
+      setLastScroll(current);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScroll]);
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border py-3"
-          : "bg-transparent py-5"
-      )}
+    <motion.header
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: visible ? 0 : -80, opacity: 1 }}
+      transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6"
+      style={{ color: "var(--text)" }}
     >
-      <div className="container flex items-center justify-between">
-        <Link
-          href="#home"
-          className="text-foreground flex justify-center items-center gap-5 font-semibold text-lg hover:text-primary transition-colors"
+      {/* Logo */}
+      <a href="#home" className="flex items-center gap-2 sm:gap-3 group" style={{ textDecoration: "none" }}>
+        {/* SVG hexagon mark */}
+        <div
+          style={{ width: 32, height: 32, flexShrink: 0, transition: "filter 0.3s" }}
+          onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 0 8px #a78bfa)"}
+          onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.filter = "none"}
         >
-          <img className="w-10 rounded-lg" src="./logo.jpg" alt="" /> <span>Babar Ali</span>
-        </Link>
-
-        <nav className="hidden md:flex items-center space-x-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={(e) => handleSmoothScroll(e, item.href)}
-              className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                pathname === item.href
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground hover:text-foreground hover:bg-accent"
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center space-x-2">
-          <div className="hidden sm:flex items-center space-x-2">
-            <a
-              href="https://github.com/BraWler66"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-            >
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <GithubIcon className="h-4 w-4" />
-              </Button>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/babar1438"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <LinkedinIcon className="h-4 w-4" />
-              </Button>
-            </a>
-            <a
-              href="https://wa.link/2xw5zy"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-            >
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <FaWhatsapp className="w-4 h-4" />
-              </Button>
-            </a>
-          </div>
-
-          <ModeToggle />
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
-          </Button>
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+            <polygon points="24,2 44,13 44,35 24,46 4,35 4,13" stroke="#c2a4ff" strokeWidth="1.5" fill="none" opacity="0.5"/>
+            <polygon points="24,8 38,16 38,32 24,40 10,32 10,16" stroke="#c2a4ff" strokeWidth="0.8" fill="none" opacity="0.2"/>
+            <line x1="24" y1="2" x2="24" y2="8" stroke="#c2a4ff" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="44" y1="13" x2="38" y2="16" stroke="#c2a4ff" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="44" y1="35" x2="38" y2="32" stroke="#c2a4ff" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="24" y1="46" x2="24" y2="40" stroke="#c2a4ff" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="4" y1="35" x2="10" y2="32" stroke="#c2a4ff" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="4" y1="13" x2="10" y2="16" stroke="#c2a4ff" strokeWidth="0.8" opacity="0.6"/>
+            <text x="24" y="31" fontFamily="Arial,sans-serif" fontWeight="700" fontSize="18" fill="#c2a4ff" textAnchor="middle">B</text>
+            <circle cx="24" cy="2" r="1.8" fill="#fb8dff"/>
+            <circle cx="44" cy="13" r="1.8" fill="#c2a4ff"/>
+            <circle cx="44" cy="35" r="1.8" fill="#7f40ff"/>
+            <circle cx="24" cy="46" r="1.8" fill="#fb8dff"/>
+            <circle cx="4" cy="35" r="1.8" fill="#c2a4ff"/>
+            <circle cx="4" cy="13" r="1.8" fill="#7f40ff"/>
+          </svg>
         </div>
-      </div>
+        {/* Wordmark */}
+        <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+          <span style={{ fontSize: 14, fontWeight: 600, letterSpacing: 3, color: "var(--text)" }}>BABAR ALI</span>
+          <span style={{ fontSize: 9, letterSpacing: 4, color: "var(--accent)", fontWeight: 400, marginTop: 2 }}>AI ENGINEER</span>
+        </div>
+      </a>
 
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden border-t border-border bg-background/95 backdrop-blur-lg"
-          >
-            <nav className="container py-4 space-y-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleSmoothScroll(e, item.href)}
-                  className={cn(
-                    "block px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                    pathname === item.href
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  )
+      {/* Center email — hidden on mobile and small tablets, shown md+ */}
+      <a
+        href="mailto:babar.ali63101@gmail.com"
+        className="hidden md:block hover-link"
+        style={{ fontSize: 12, letterSpacing: 1, color: "var(--muted)" }}
+      >
+        <span>babar.ali63101@gmail.com</span>
+        <span>babar.ali63101@gmail.com</span>
+      </a>
+
+      {/* Nav links */}
+      <nav className="flex items-center gap-4 sm:gap-6 md:gap-8">
+        {navItems.map((item) => (
+          <HoverLink key={item.href} href={item.href}>
+            {item.label}
+          </HoverLink>
+        ))}
+      </nav>
+    </motion.header>
+  );
 }
