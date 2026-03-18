@@ -84,17 +84,7 @@ export default function Header() {
         </div>
       </a>
 
-      {/* Center email — hidden on mobile and small tablets, shown md+ */}
-      <a
-        href="mailto:babar.ali63101@gmail.com"
-        className="hidden md:block hover-link"
-        style={{ fontSize: 12, letterSpacing: 1, color: "var(--muted)" }}
-      >
-        <span>babar.ali63101@gmail.com</span>
-        <span>babar.ali63101@gmail.com</span>
-      </a>
-
-      {/* Nav links */}
+{/* Nav links */}
       <nav className="flex items-center gap-4 sm:gap-6 md:gap-8">
         {navItems.map((item) => (
           <HoverLink key={item.href} href={item.href}>
