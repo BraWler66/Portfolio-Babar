@@ -49,8 +49,7 @@ export default function Header() {
       animate={{ y: visible ? 0 : -80, opacity: 1 }}
       transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 sm:px-6 sm:py-5 md:px-8 md:py-6"
-      style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", background: "rgba(11,8,12,0.6)" }}
-      style={{ color: "var(--text)" }}
+      style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", background: "rgba(11,8,12,0.6)", color: "var(--text)" }}
     >
       {/* Logo */}
       <a href="#home" className="flex items-center gap-2 sm:gap-3 group" style={{ textDecoration: "none" }}>
