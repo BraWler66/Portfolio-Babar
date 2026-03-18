@@ -210,6 +210,41 @@ p[style*="fontSize: 12"] {
   #home h1 {
     font-size: clamp(36px, 10vw, 60px);
   }
+
+  /* ── Mobile performance: kill expensive effects ── */
+
+  /* No backdrop-filter on mobile (GPU killer) */
+  header,
+  [style*="backdropFilter"],
+  [style*="backdrop-filter"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Slow marquee down (fewer repaints) */
+  .marquee-row1 { animation-duration: 30s !important; }
+  .marquee-row2 { animation-duration: 25s !important; }
+
+  /* Kill box-shadow animations on mobile */
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(194,164,255,0.4); }
+    50%       { box-shadow: 0 0 8px rgba(194,164,255,0.4); }
+  }
+
+  /* Kill floatY (causes constant repaints) */
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(0); }
+  }
+
+  /* Kill floatCard */
+  @keyframes floatCard {
+    0%, 100% { transform: none; }
+    50%       { transform: none; }
+  }
+
+  /* Kill orbitSpin rings on mobile */
+  @keyframes orbitSpin { to { transform: none; } }
 }
 
 /* ── iPhone safe areas ──────────────────────────────────────── */

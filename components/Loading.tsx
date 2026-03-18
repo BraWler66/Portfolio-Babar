@@ -12,7 +12,14 @@ export default function Loading({ onComplete }: Props) {
   const [done, setDone] = useState(false);
   const [expanding, setExpanding] = useState(false);
 
+  // On touch devices, skip the loading animation entirely
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+
   useEffect(() => {
+    if (isTouch) {
+      onComplete();
+      return;
+    }
     const interval = setInterval(() => {
       setProgress((p) => {
         if (p >= 100) {

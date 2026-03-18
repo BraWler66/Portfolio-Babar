@@ -77,8 +77,8 @@ export default function Header() {
             <circle cx="4" cy="13" r="1.8" fill="#7f40ff"/>
           </svg>
         </div>
-        {/* Wordmark */}
-        <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+        {/* Wordmark — hidden on mobile */}
+        <div className="hidden sm:flex" style={{ flexDirection: "column", lineHeight: 1 }}>
           <span style={{ fontSize: 14, fontWeight: 600, letterSpacing: 3, color: "var(--text)" }}>BABAR ALI</span>
           <span style={{ fontSize: 9, letterSpacing: 4, color: "var(--accent)", fontWeight: 400, marginTop: 2 }}>AI ENGINEER</span>
         </div>
