@@ -653,10 +653,10 @@ function ProjectCard({ project, active, setActive, delay, align, fullWidth }: {
 function AutonomousCarSection() {
   const videoRef = useRef<HTMLDivElement>(null);
   const [gifIndex, setGifIndex] = useState(1);
-  const gifs = ["/car1.gif", "/car2.gif", "/car3.gif"];
+  const gifs = ["/car2.gif", "/car3.gif"];
 
   useEffect(() => {
-    const interval = setInterval(() => setGifIndex((i) => (i % 3) + 1), 4000);
+    const interval = setInterval(() => setGifIndex((i) => (i % 2) + 1), 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -842,12 +842,12 @@ function OtherProjectsMarquee() {
         @media (max-width: 767px) {
           .marquee-row1 {
             animation-name: marquee-mobile !important;
-            animation-duration: 18s !important;
+            animation-duration: 120s !important;
             gap: 10px !important;
           }
           .marquee-row2 {
             animation-name: marquee-mobile !important;
-            animation-duration: 15s !important;
+            animation-duration: 100s !important;
             gap: 10px !important;
           }
           .marquee-card {
