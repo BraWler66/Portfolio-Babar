@@ -60,7 +60,7 @@ const skills = [
   )},
 ];
 
-const ITEMS = [...skills, ...skills];
+const ITEMS = [...skills, ...skills, ...skills, ...skills];
 
 export default function SkillsMarquee() {
   return (

@@ -366,11 +366,11 @@ section { position: relative; }
 /* Marquee */
 @keyframes marquee {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-25%); }
 }
 .marquee-track {
   display: flex;
-  animation: marquee 40s linear infinite;
+  animation: marquee 60s linear infinite;
   white-space: nowrap;
   will-change: transform;
 }
