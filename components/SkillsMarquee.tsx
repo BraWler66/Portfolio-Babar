@@ -64,14 +64,17 @@ const ITEMS = [...skills, ...skills];
 
 export default function SkillsMarquee() {
   return (
-    <div style={{
-      borderTop: "1px solid var(--border)",
-      borderBottom: "1px solid var(--border)",
-      overflow: "hidden",
-      background: "rgba(194,164,255,0.015)",
-      padding: "20px 0",
-      position: "relative",
-    }}>
+    <div
+      className="marquee-container"
+      style={{
+        borderTop: "1px solid var(--border)",
+        borderBottom: "1px solid var(--border)",
+        overflow: "hidden",
+        background: "rgba(194,164,255,0.015)",
+        padding: "20px 0",
+        position: "relative",
+      }}
+    >
       {/* Fades */}
       <div style={{ position:"absolute", left:0, top:0, bottom:0, width:100, background:"linear-gradient(to right, #0b080c, transparent)", zIndex:2, pointerEvents:"none" }} />
       <div style={{ position:"absolute", right:0, top:0, bottom:0, width:100, background:"linear-gradient(to left, #0b080c, transparent)", zIndex:2, pointerEvents:"none" }} />

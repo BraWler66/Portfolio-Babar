@@ -372,6 +372,11 @@ section { position: relative; }
   display: flex;
   animation: marquee 40s linear infinite;
   white-space: nowrap;
+  will-change: transform;
+}
+.marquee-container:hover .marquee-track,
+.marquee-container:focus-within .marquee-track {
+  animation-play-state: paused;
 }
 
 /* Dashed border draw */
