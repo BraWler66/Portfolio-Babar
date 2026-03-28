@@ -17,15 +17,13 @@ export default function Loading({ onComplete }: Props) {
     const touch = window.matchMedia("(pointer: coarse)").matches;
     setIsMobile(touch);
     if (touch) {
-      // On mobile: wait for real page load then dismiss
+      // On mobile: dismiss as soon as DOM is ready — don't wait for heavy assets
       const finish = () => onComplete();
-      if (document.readyState === "complete") {
+      if (document.readyState !== "loading") {
         finish();
       } else {
-        window.addEventListener("load", finish, { once: true });
-        // Safety fallback after 4s
-        const t = setTimeout(finish, 4000);
-        return () => { window.removeEventListener("load", finish); clearTimeout(t); };
+        document.addEventListener("DOMContentLoaded", finish, { once: true });
+        return () => document.removeEventListener("DOMContentLoaded", finish);
       }
       return;
     }

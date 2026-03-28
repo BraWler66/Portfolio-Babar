@@ -1256,6 +1256,8 @@ function VRTherapySection() {
                     <img
                       src={current.screen}
                       alt={current.screenLabel || ""}
+                      loading="lazy"
+                      decoding="async"
                       style={{ width: "100%", display: "block", aspectRatio: "16/10", objectFit: "cover" }}
                       onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; (e.currentTarget.nextSibling as HTMLElement).style.display = "flex"; }}
                     />

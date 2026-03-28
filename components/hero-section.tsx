@@ -9,9 +9,14 @@ const HeroModel3D = dynamic(() => import("./HeroModel3D"), { ssr: false });
 const roles = ["AI Engineer", "ML Researcher", "Computer Vision Expert", "LLM Developer"];
 
 export default function HeroSection() {
+  const [isMobile, setIsMobile] = useState(true);
   const [roleIndex, setRoleIndex] = useState(0);
   const [display, setDisplay] = useState("");
   const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
 
   useEffect(() => {
     const role = roles[roleIndex];
@@ -188,7 +193,7 @@ export default function HeroSection() {
           }}
         />
 
-        <HeroModel3D />
+        {!isMobile && <HeroModel3D />}
       </div>
     </section>
   );
