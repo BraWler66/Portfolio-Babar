@@ -11,13 +11,22 @@ export default function Loading({ onComplete }: Props) {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
   const [expanding, setExpanding] = useState(false);
-
-  // On touch devices, skip the loading animation entirely
-  const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (isTouch) {
-      onComplete();
+    const touch = window.matchMedia("(pointer: coarse)").matches;
+    setIsMobile(touch);
+    if (touch) {
+      // On mobile: wait for real page load then dismiss
+      const finish = () => onComplete();
+      if (document.readyState === "complete") {
+        finish();
+      } else {
+        window.addEventListener("load", finish, { once: true });
+        // Safety fallback after 4s
+        const t = setTimeout(finish, 4000);
+        return () => { window.removeEventListener("load", finish); clearTimeout(t); };
+      }
       return;
     }
     const interval = setInterval(() => {
@@ -42,6 +51,30 @@ export default function Loading({ onComplete }: Props) {
     setExpanding(true);
     setTimeout(onComplete, 800);
   };
+
+  // Null during SSR — render nothing until we know device type
+  if (isMobile === null) return null;
+
+  // Mobile: minimal dark spinner while page loads
+  if (isMobile) {
+    return (
+      <motion.div
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="fixed inset-0 z-[9998] flex flex-col items-center justify-center"
+        style={{ backgroundColor: "#0b080c" }}
+      >
+        <div style={{
+          width: 36, height: 36, borderRadius: "50%",
+          border: "2px solid rgba(194,164,255,0.2)",
+          borderTopColor: "#c2a4ff",
+          animation: "spin 0.8s linear infinite",
+        }} />
+        <p style={{ marginTop: 20, fontSize: 11, letterSpacing: 4, color: "var(--muted)", textTransform: "uppercase" }}>Loading</p>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </motion.div>
+    );
+  }
 
   return (
     <AnimatePresence>

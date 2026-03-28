@@ -2,14 +2,10 @@
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        borderTop: "1px solid var(--border)",
-        padding: "40px 0",
-      }}
-    >
+    <footer style={{ borderTop: "1px solid var(--border)", padding: "clamp(24px,5vw,40px) 0" }}>
       <div
-        className="max-w-[1300px] mx-auto px-8 flex items-center justify-between flex-wrap gap-4"
+        className="max-w-[1300px] mx-auto flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left sm:gap-4"
+        style={{ padding: "0 clamp(16px,5vw,32px)" }}
       >
         <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: 2 }}>
           © {new Date().getFullYear()} Babar Ali
