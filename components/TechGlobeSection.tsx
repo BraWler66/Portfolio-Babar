@@ -1,26 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
 const TechGlobe3D = dynamic(() => import("./TechGlobe3D"), { ssr: false });
 
 export default function TechGlobeSection() {
-  const [showGlobe, setShowGlobe] = useState(false);
-
-  useEffect(() => {
-    // Only load WebGL globe on non-touch devices
-    if (!window.matchMedia("(pointer: coarse)").matches) {
-      setShowGlobe(true);
-    }
-  }, []);
-
   return (
     <div style={{ borderTop: "1px solid var(--border)", position: "relative", overflow: "hidden" }} className="tech-globe-section">
-      {/* Globe — desktop only, skip WebGL on mobile */}
+      {/* Globe */}
       <div style={{ position: "absolute", inset: 0, zIndex: 1 }} className="tech-globe-canvas">
-        {showGlobe && <TechGlobe3D />}
+        <TechGlobe3D />
       </div>
 
       {/* Desktop gradients — hide on mobile */}

@@ -470,7 +470,7 @@ function MedicalBodyModel() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr min(200px, 48vw) 1fr", gap: 6, alignItems: "center", minHeight: 500 }}>
 
             {/* Left labels */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-end" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "flex-end" }}>
               {medicalProjects.filter((p) => p.side === "left").map((p) => (
                 <button key={p.id} onClick={() => setMobileModal(mobileModal === p.id ? null : p.id)}
                   style={{
@@ -479,8 +479,8 @@ function MedicalBodyModel() {
                     border: `1px solid ${mobileModal === p.id ? "rgba(194,164,255,0.4)" : "rgba(194,164,255,0.15)"}`,
                     borderRadius: 6, padding: "6px 8px", cursor: "pointer", transition: "all 0.25s", width: "100%",
                   }}>
-                  <p style={{ fontSize: 9, letterSpacing: 1, color: "var(--pink)", textTransform: "uppercase", marginBottom: 3, wordBreak: "break-word" }}>{p.sublabel}</p>
-                  <p style={{ fontSize: 11, fontWeight: 600, color: "var(--text)", lineHeight: 1.3, wordBreak: "break-word" }}>{p.label}</p>
+                  <p style={{ fontSize: 8, letterSpacing: 1, color: "var(--pink)", textTransform: "uppercase", marginBottom: 2, overflowWrap: "break-word", hyphens: "auto" } as React.CSSProperties}>{p.sublabel}</p>
+                  <p style={{ fontSize: 10, fontWeight: 600, color: "var(--text)", lineHeight: 1.25, overflowWrap: "break-word", hyphens: "auto" } as React.CSSProperties}>{p.label}</p>
                 </button>
               ))}
             </div>
@@ -527,7 +527,7 @@ function MedicalBodyModel() {
             </motion.div>
 
             {/* Right labels */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-start" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "flex-start" }}>
               {medicalProjects.filter((p) => p.side === "right").map((p) => (
                 <button key={p.id} onClick={() => setMobileModal(mobileModal === p.id ? null : p.id)}
                   style={{
@@ -536,8 +536,8 @@ function MedicalBodyModel() {
                     border: `1px solid ${mobileModal === p.id ? "rgba(194,164,255,0.4)" : "rgba(194,164,255,0.15)"}`,
                     borderRadius: 6, padding: "6px 8px", cursor: "pointer", transition: "all 0.25s", width: "100%",
                   }}>
-                  <p style={{ fontSize: 9, letterSpacing: 1, color: "var(--pink)", textTransform: "uppercase", marginBottom: 3, wordBreak: "break-word" }}>{p.sublabel}</p>
-                  <p style={{ fontSize: 11, fontWeight: 600, color: "var(--text)", lineHeight: 1.3, wordBreak: "break-word" }}>{p.label}</p>
+                  <p style={{ fontSize: 8, letterSpacing: 1, color: "var(--pink)", textTransform: "uppercase", marginBottom: 2, overflowWrap: "break-word", hyphens: "auto" } as React.CSSProperties}>{p.sublabel}</p>
+                  <p style={{ fontSize: 10, fontWeight: 600, color: "var(--text)", lineHeight: 1.25, overflowWrap: "break-word", hyphens: "auto" } as React.CSSProperties}>{p.label}</p>
                 </button>
               ))}
             </div>
