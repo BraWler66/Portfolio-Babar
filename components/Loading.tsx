@@ -17,14 +17,8 @@ export default function Loading({ onComplete }: Props) {
     const touch = window.matchMedia("(pointer: coarse)").matches;
     setIsMobile(touch);
     if (touch) {
-      // On mobile: dismiss as soon as DOM is ready — don't wait for heavy assets
-      const finish = () => onComplete();
-      if (document.readyState !== "loading") {
-        finish();
-      } else {
-        document.addEventListener("DOMContentLoaded", finish, { once: true });
-        return () => document.removeEventListener("DOMContentLoaded", finish);
-      }
+      // On mobile: dismiss immediately — no waiting for assets
+      onComplete();
       return;
     }
     const interval = setInterval(() => {
@@ -50,29 +44,8 @@ export default function Loading({ onComplete }: Props) {
     setTimeout(onComplete, 800);
   };
 
-  // Null during SSR — render nothing until we know device type
-  if (isMobile === null) return null;
-
-  // Mobile: minimal dark spinner while page loads
-  if (isMobile) {
-    return (
-      <motion.div
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        className="fixed inset-0 z-[9998] flex flex-col items-center justify-center"
-        style={{ backgroundColor: "#0b080c" }}
-      >
-        <div style={{
-          width: 36, height: 36, borderRadius: "50%",
-          border: "2px solid rgba(194,164,255,0.2)",
-          borderTopColor: "#c2a4ff",
-          animation: "spin 0.8s linear infinite",
-        }} />
-        <p style={{ marginTop: 20, fontSize: 11, letterSpacing: 4, color: "var(--muted)", textTransform: "uppercase" }}>Loading</p>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </motion.div>
-    );
-  }
+  // On mobile: onComplete() fires immediately in useEffect, render nothing
+  if (isMobile === null || isMobile) return null;
 
   return (
     <AnimatePresence>
