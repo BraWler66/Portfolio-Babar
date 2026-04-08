@@ -52,6 +52,16 @@ export default function HeroSection() {
       className="relative min-h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2"
       style={{ alignItems: "center" }}
     >
+      {/* ── Mobile-only CSS background (no JS/canvas) ── */}
+      {isMobile && (
+        <div className="mobile-bg-layer" aria-hidden="true">
+          <div className="mob-orb mob-orb-1" />
+          <div className="mob-orb mob-orb-2" />
+          <div className="mob-orb mob-orb-3" />
+          {/* grid lines */}
+          <div className="mob-grid" />
+        </div>
+      )}
       {/* ── LEFT: Text content ─────────────────────────────────────── */}
       <div
         className="relative flex flex-col justify-center z-10"
