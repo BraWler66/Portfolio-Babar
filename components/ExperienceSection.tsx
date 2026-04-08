@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useExperienceDuration } from "@/lib/useExperienceDuration";
 
 const JOBS = [
   {
@@ -47,6 +48,7 @@ export default function ExperienceSection() {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
   const lineH = useTransform(scrollYProgress, [0.1, 0.7], ["0%", "100%"]);
+  const { neuralLabel } = useExperienceDuration();
 
   return (
     <section
@@ -155,7 +157,7 @@ export default function ExperienceSection() {
           </div>
 
           {JOBS.map((job, idx) => (
-            <JobCard key={job.id} job={job} idx={idx} />
+            <JobCard key={job.id} job={job} idx={idx} neuralLabel={neuralLabel} />
           ))}
         </div>
       </div>
@@ -182,7 +184,7 @@ export default function ExperienceSection() {
   );
 }
 
-function JobCard({ job, idx }: { job: typeof JOBS[0]; idx: number }) {
+function JobCard({ job, idx, neuralLabel }: { job: typeof JOBS[0]; idx: number; neuralLabel: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, margin: "-80px" });
   const isLeft = idx % 2 === 0;
@@ -218,7 +220,7 @@ function JobCard({ job, idx }: { job: typeof JOBS[0]; idx: number }) {
               transition={{ duration: 0.6, delay: 0.2 }}
               style={{ textAlign: "right" }}
             >
-              <PeriodBlock job={job} align="right" />
+              <PeriodBlock job={job} align="right" neuralLabel={neuralLabel} />
             </motion.div>
           )}
         </div>
@@ -245,7 +247,7 @@ function JobCard({ job, idx }: { job: typeof JOBS[0]; idx: number }) {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <PeriodBlock job={job} align="left" />
+              <PeriodBlock job={job} align="left" neuralLabel={neuralLabel} />
             </motion.div>
           )}
         </div>
@@ -306,7 +308,7 @@ function JobCard({ job, idx }: { job: typeof JOBS[0]; idx: number }) {
             </div>
             {/* Period */}
             <div style={{ fontSize: 18, fontWeight: 300, color: "var(--text)", lineHeight: 1.2, marginBottom: 2 }}>
-              {job.period}
+              {job.id === "neural" ? `Jul 2025  ·  ${neuralLabel}` : job.period}
             </div>
             <div style={{ fontSize: 10, letterSpacing: 2, color: "var(--muted)", textTransform: "uppercase" }}>
               {job.location}
@@ -376,7 +378,11 @@ function TimelineNode({ job, isInView }: { job: typeof JOBS[0]; isInView: boolea
   );
 }
 
-function PeriodBlock({ job, align }: { job: typeof JOBS[0]; align: "left" | "right" }) {
+function PeriodBlock({ job, align, neuralLabel }: { job: typeof JOBS[0]; align: "left" | "right"; neuralLabel: string }) {
+  const displayPeriod = job.id === "neural"
+    ? `Jul 2025  ·  ${neuralLabel}`
+    : job.period;
+
   return (
     <div style={{ textAlign: align }}>
       {/* Tag */}
@@ -402,7 +408,7 @@ function PeriodBlock({ job, align }: { job: typeof JOBS[0]; align: "left" | "rig
       </div>
 
       <div style={{ fontSize: 26, fontWeight: 300, color: "var(--text)", lineHeight: 1.2, marginBottom: 6 }}>
-        {job.period}
+        {displayPeriod}
       </div>
       <div style={{ fontSize: 12, letterSpacing: 2, color: "var(--muted)", textTransform: "uppercase" }}>
         {job.location}

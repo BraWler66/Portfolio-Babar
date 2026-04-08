@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 const AboutSection      = dynamic(() => import("@/components/about-section"),       { ssr: false });
@@ -12,9 +13,15 @@ const CTASection        = dynamic(() => import("@/components/cta-section"),     
 const NeuralBackground  = dynamic(() => import("@/components/NeuralBackground"),    { ssr: false });
 
 export default function PageSections() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
   return (
     <>
-      <NeuralBackground />
+      {!isMobile && <NeuralBackground />}
       <AboutSection />
       <WhatIDo />
       <ExperienceSection />

@@ -2,11 +2,13 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useExperienceDuration } from "@/lib/useExperienceDuration";
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const { totalLabel } = useExperienceDuration();
 
   return (
     <section
@@ -103,7 +105,7 @@ export default function AboutSection() {
             >
               {[
                 { label: "Education", value: "BS Artificial Intelligence", sub: "Bahria University" },
-                { label: "Experience", value: "1.5+ Years", sub: "AI / ML Engineering" },
+                { label: "Experience", value: totalLabel, sub: "AI / ML Engineering" },
                 { label: "Location", value: "Islamabad, PK", sub: "Open to Remote" },
                 { label: "Status", value: "Open to Work", sub: "Full-time · Contract" },
               ].map((item, i) => (

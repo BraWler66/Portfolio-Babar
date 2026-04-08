@@ -84,13 +84,39 @@ export default function Header() {
         </div>
       </a>
 
-{/* Nav links */}
+{/* Nav links + resume */}
       <nav className="flex items-center gap-4 sm:gap-6 md:gap-8">
         {navItems.map((item) => (
           <HoverLink key={item.href} href={item.href}>
             {item.label}
           </HoverLink>
         ))}
+        <a
+          href="/babar-ali-resume.pdf"
+          download
+          style={{
+            fontSize: "clamp(9px, 1.4vw, 11px)",
+            letterSpacing: 2,
+            fontWeight: 400,
+            padding: "6px 14px",
+            border: "1px solid var(--accent)",
+            borderRadius: 50,
+            color: "var(--accent)",
+            textDecoration: "none",
+            transition: "background 0.25s, color 0.25s",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent)";
+            (e.currentTarget as HTMLAnchorElement).style.color = "#0b080c";
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+            (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)";
+          }}
+        >
+          RÉSUMÉ
+        </a>
       </nav>
     </motion.header>
   );
