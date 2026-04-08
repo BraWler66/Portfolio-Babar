@@ -769,8 +769,8 @@ function OtherProjectsMarquee() {
   const half1 = otherProjects.slice(0, 5);
   const half2 = otherProjects.slice(5);
   // 4× copies for seamless loop on both desktop and mobile
-  const row1 = [...half1, ...half1, ...half1, ...half1];
-  const row2x = [...half2, ...half2, ...half2, ...half2];
+  const row1 = [...half1, ...half1];
+  const row2x = [...half2, ...half2];
 
   return (
     <section
@@ -816,13 +816,13 @@ function OtherProjectsMarquee() {
       <div style={{ overflow: "hidden", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
         {/* Row 1 — left */}
         <div style={{ borderBottom: "1px solid rgba(127,64,255,0.12)", paddingTop: 2, paddingBottom: 2 }}>
-          <div className="marquee-row1" style={{ display: "flex", gap: 12, animation: `marquee-desktop 90s linear infinite`, width: "max-content" }}>
+          <div className="marquee-row1" style={{ display: "flex", gap: 12, animation: `marquee-desktop 60s linear infinite`, width: "max-content", willChange: "transform", backfaceVisibility: "hidden" }}>
             {row1.map((p, i) => <MarqueeCard key={i} project={p} />)}
           </div>
         </div>
         {/* Row 2 — right */}
         <div style={{ paddingTop: 2, paddingBottom: 2 }}>
-          <div className="marquee-row2" style={{ display: "flex", gap: 12, animation: `marquee-desktop 80s linear infinite reverse`, width: "max-content" }}>
+          <div className="marquee-row2" style={{ display: "flex", gap: 12, animation: `marquee-desktop 55s linear infinite reverse`, width: "max-content", willChange: "transform", backfaceVisibility: "hidden" }}>
             {row2x.map((p, i) => <MarqueeCard key={i} project={p} />)}
           </div>
         </div>
@@ -832,12 +832,11 @@ function OtherProjectsMarquee() {
         /* Desktop: card = 340px, 5 cards × 4 copies = 20 cards, one set = 5 × 352px = 1760px, translate = 25% (1 of 4 sets) */
         @keyframes marquee-desktop {
           0%   { transform: translateX(0); }
-          100% { transform: translateX(-25%); }
+          100% { transform: translateX(-50%); }
         }
-        /* Mobile: card = 220px, gap = 10px, one set = 5 × 230px = 1150px, translate = 25% (1 of 4 sets) */
         @keyframes marquee-mobile {
           0%   { transform: translateX(0); }
-          100% { transform: translateX(-25%); }
+          100% { transform: translateX(-50%); }
         }
         @media (max-width: 767px) {
           .marquee-row1 {
