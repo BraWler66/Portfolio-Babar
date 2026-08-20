@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import VRSessionStage from "./Projects/VRSessionStage";
 
 const medicalProjects = [
   {
@@ -706,14 +707,15 @@ function AutonomousCarSection() {
           <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
             <p style={{ fontSize: "clamp(14px, 1.6vw, 20px)", fontWeight: 300, lineHeight: 1.9, color: "var(--muted)", marginBottom: 40 }}>
               A self-driving agent trained with{" "}
-              <span style={{ color: "var(--accent)" }}>Deep Q-Network</span> reinforcement learning inside
-              the <span style={{ color: "var(--pink)" }}>CARLA Simulator</span>. Observes RGB camera feeds,
-              plans routes, and learns urban navigation purely through reward signals — zero hand-coded rules.
+              <span style={{ color: "var(--accent)" }}>PPO</span> reinforcement learning inside
+              the <span style={{ color: "var(--pink)" }}>CARLA Simulator</span>. Learns lane following and
+              adaptive speed regulation from raw camera input, guided by a custom reward-shaping function
+              that penalizes unsafe behavior — zero hand-coded driving rules.
             </p>
 
             <div className="grid grid-cols-2" style={{ gap: 20, marginBottom: 36 }}>
               {[
-                { label: "Algorithm", value: "Deep Q-Network" },
+                { label: "Algorithm", value: "PPO" },
                 { label: "Environment", value: "CARLA Simulator" },
                 { label: "Observation", value: "RGB Camera" },
                 { label: "Framework", value: "OpenAI Gym" },
@@ -726,7 +728,7 @@ function AutonomousCarSection() {
             </div>
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, maxWidth: "100%" }}>
-              {["Reinforcement Learning", "CARLA", "DQN", "Computer Vision", "TensorBoard", "Python"].map((t) => (
+              {["Reinforcement Learning", "CARLA", "PPO", "Reward Shaping", "Computer Vision", "Python"].map((t) => (
                 <span key={t} style={{ fontSize: 11, color: "var(--pink)", border: "1px solid rgba(194,164,255,0.25)", padding: "4px 10px", borderRadius: 4, background: "rgba(194,164,255,0.05)", whiteSpace: "nowrap" }}>{t}</span>
               ))}
             </div>
@@ -741,7 +743,7 @@ function AutonomousCarSection() {
               </AnimatePresence>
               <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "linear-gradient(to top, rgba(11,8,12,0.6) 0%, transparent 40%)" }} />
               <div style={{ position: "absolute", bottom: 14, left: 16, fontSize: 10, letterSpacing: 3, color: "rgba(194,164,255,0.7)", textTransform: "uppercase" }}>
-                CARLA Simulator · DQN Agent
+                CARLA Simulator · PPO Agent
               </div>
               {[["top-2 left-2", true, false, true, false], ["top-2 right-2", true, false, false, true], ["bottom-2 left-2", false, true, true, false], ["bottom-2 right-2", false, true, false, true]].map(([pos, bt, bb, bl, br], i) => (
                 <div key={i} className={`absolute ${pos} w-4 h-4 pointer-events-none`} style={{ borderTop: bt ? "1px solid rgba(194,164,255,0.5)" : "none", borderBottom: bb ? "1px solid rgba(194,164,255,0.5)" : "none", borderLeft: bl ? "1px solid rgba(194,164,255,0.5)" : "none", borderRight: br ? "1px solid rgba(194,164,255,0.5)" : "none" }} />
@@ -1043,7 +1045,7 @@ function VRTherapySection() {
 
   useEffect(() => {
     if (!isPlaying) return;
-    timerRef.current = setTimeout(advance, 2200);
+    timerRef.current = setTimeout(advance, 3400);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [isPlaying, advance, activeStep]);
 
@@ -1227,73 +1229,37 @@ function VRTherapySection() {
               </div>
             </div>
 
-            {/* RIGHT — Screenshot preview */}
-            <div>
-              <p style={{ fontSize: 10, letterSpacing: 4, color: "var(--muted)", textTransform: "uppercase", marginBottom: 16 }}>
-                Live Preview
-              </p>
-              <AnimatePresence mode="wait">
-                <motion.div key={`${activeTrack}-${activeStep}`}
-                  initial={{ opacity: 0, y: 16, scale: 0.97 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -10, scale: 0.97 }}
-                  transition={{ duration: 0.35 }}
-                  style={{ borderRadius: 14, overflow: "hidden", border: `1px solid ${current.color}30`, boxShadow: `0 0 40px ${current.color}18`, position: "relative" }}>
-                  {/* Corner brackets */}
-                  {[["top:8px;left:8px", "top right"], ["top:8px;right:8px", "top left"], ["bottom:8px;left:8px", "bottom right"], ["bottom:8px;right:8px", "bottom left"]].map(([s, b], idx) => (
-                    <div key={idx} style={{
-                      position: "absolute", width: 16, height: 16, zIndex: 2, pointerEvents: "none",
-                      ...(Object.fromEntries(s.split(";").map(p => [p.split(":")[0], p.split(":")[1]]))),
-                      borderTop: b.includes("top") ? `1px solid ${current.color}90` : "none",
-                      borderBottom: b.includes("bottom") ? `1px solid ${current.color}90` : "none",
-                      borderLeft: b.includes("left") ? `1px solid ${current.color}90` : "none",
-                      borderRight: b.includes("right") ? `1px solid ${current.color}90` : "none",
-                    }} />
-                  ))}
+            {/* RIGHT — Animated session visualization */}
+            <div className="vr-stage-col">
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 16, gap: 12 }}>
+                <p style={{ fontSize: 10, letterSpacing: 4, color: "var(--muted)", textTransform: "uppercase" }}>
+                  {activeTrack === "vr" ? "VR Session" : "Pipeline View"}
+                </p>
+                <p style={{ fontSize: 10, color: "var(--accent)", letterSpacing: 1.5 }}>
+                  {current.sublabel}
+                </p>
+              </div>
 
-                  {current.screen ? (
-                    <img
-                      src={current.screen}
-                      alt={current.screenLabel || ""}
-                      loading="lazy"
-                      decoding="async"
-                      style={{ width: "100%", display: "block", aspectRatio: "16/10", objectFit: "cover" }}
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; (e.currentTarget.nextSibling as HTMLElement).style.display = "flex"; }}
-                    />
-                  ) : null}
+              <VRSessionStage phase={activeStep} />
 
-                  {/* Fallback / AI processing visual */}
-                  <div style={{
-                    display: current.screen ? "none" : "flex",
-                    aspectRatio: "16/10",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: `linear-gradient(135deg, rgba(11,8,12,0.95), ${current.color}08)`,
-                    gap: 12,
-                  }}>
-                    <div style={{ fontSize: 40 }}>{current.icon}</div>
-                    <p style={{ fontSize: 13, color: current.color, letterSpacing: 2, fontWeight: 600 }}>{current.label}</p>
-                    {/* Animated data flow lines */}
-                    <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
-                      {[...Array(5)].map((_, i) => (
-                        <div key={i} style={{ width: 3, background: current.color, borderRadius: 2, opacity: 0.7 }}
-                          className={`vr-bar-${i}`} />
-                      ))}
-                    </div>
-                    <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 1.5 }}>PROCESSING...</p>
-                  </div>
-
-                  {/* Bottom label bar */}
-                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "10px 14px", background: "linear-gradient(to top, rgba(11,8,12,0.92), transparent)", display: "flex", alignItems: "center", gap: 8 }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} className="vr-dot-pulse" />
-                    <p style={{ fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: 2, textTransform: "uppercase" }}>
-                      {current.screenLabel || current.label}
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-
+              {/* Real Unity captures, shown honestly as build screenshots */}
+              {current.screen && (
+                <div style={{ marginTop: 14 }}>
+                  <p style={{ fontSize: 9, letterSpacing: 2.5, color: "var(--muted)", textTransform: "uppercase", marginBottom: 8 }}>
+                    Actual build · {current.screenLabel}
+                  </p>
+                  <AnimatePresence mode="wait">
+                    <motion.div key={`${activeTrack}-${activeStep}-shot`}
+                      initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      style={{ borderRadius: 10, overflow: "hidden", border: "1px solid rgba(194,164,255,0.18)" }}>
+                      <img src={current.screen} alt={current.screenLabel || ""}
+                        loading="lazy" decoding="async"
+                        style={{ width: "100%", display: "block", aspectRatio: "16/7", objectFit: "cover", opacity: 0.85 }} />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              )}
             </div>
           </div>
         </motion.div>
@@ -1324,7 +1290,8 @@ function VRTherapySection() {
         @media (max-width: 767px) {
           .vr-workflow-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
           .vr-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .vr-workflow-grid > div:last-child { display: none; }
+          /* stage leads on mobile — it reads better than the step list */
+          .vr-stage-col { order: -1; }
         }
       `}</style>
     </section>

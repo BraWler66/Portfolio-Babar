@@ -34,12 +34,12 @@ const JOBS = [
     colorDim: "rgba(194,164,255,",
     hex: 0xfb8dff,
     bullets: [
-      "Building production LangChain RAG pipelines & LLM applications",
-      "Developing NLP systems: NER models, sentiment analysis, text classification",
-      "Automated data workflows & interactive Power BI visualizations",
-      "Fine-tuning LLMs and deploying AI models to production",
+      "Built NLP pipelines for text classification, NER, and sentiment analysis",
+      "Engineered data preprocessing workflows for production model training",
+      "Delivered insights through automated visualization & model evaluation reports",
+      "Fine-tuned LLMs (LoRA/QLoRA) and deployed inference services to production",
     ],
-    skills: ["LangChain", "LLMs", "NER", "RAG", "NLP", "Power BI", "Fine-tuning", "FastAPI"],
+    skills: ["LangChain", "LangGraph", "NER", "Agentic RAG", "NLP", "LoRA/QLoRA", "vLLM", "FastAPI"],
   },
 ];
 

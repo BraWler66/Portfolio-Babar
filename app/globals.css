@@ -481,3 +481,318 @@ section { position: relative; }
   0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
   50%       { transform: translate(-20px, 25px) scale(1.15); opacity: 1; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   HERO PORTRAIT — replaces the old WebGL hero model
+   ══════════════════════════════════════════════════════════ */
+.hero-portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+/* Ambient bloom */
+.hp-bloom {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(46px);
+}
+.hp-bloom-a {
+  inset: -14%;
+  background: radial-gradient(circle, rgba(127, 64, 255, 0.34) 0%, transparent 68%);
+  animation: hpBloom 9s ease-in-out infinite;
+}
+.hp-bloom-b {
+  inset: -4%;
+  background: radial-gradient(circle, rgba(251, 141, 255, 0.20) 0%, transparent 66%);
+  animation: hpBloom 7s ease-in-out infinite 1.6s;
+}
+
+/* Orbit rings */
+.hp-ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hp-ring-1 {
+  inset: -6%;
+  border: 1px solid rgba(194, 164, 255, 0.28);
+  animation: hpSpin 22s linear infinite;
+}
+.hp-ring-2 {
+  inset: -13%;
+  border: 1px dashed rgba(251, 141, 255, 0.16);
+  animation: hpSpin 34s linear infinite reverse;
+}
+.hp-dot {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 50%;
+  background: #c2a4ff;
+  box-shadow: 0 0 12px #c2a4ff, 0 0 22px rgba(194, 164, 255, 0.6);
+}
+.hp-dot-pink {
+  background: #fb8dff;
+  box-shadow: 0 0 12px #fb8dff, 0 0 22px rgba(251, 141, 255, 0.6);
+}
+
+/* Portrait disc */
+.hp-disc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  animation: hpFloat 8s ease-in-out infinite;
+  box-shadow:
+    0 0 0 1px rgba(194, 164, 255, 0.22),
+    0 0 44px rgba(127, 64, 255, 0.30),
+    0 26px 70px rgba(0, 0, 0, 0.55);
+}
+.hp-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* lift the subject slightly and warm it to match the purple scene */
+  filter: contrast(1.06) saturate(1.04) brightness(1.02);
+}
+/* Inner rim keeps the edge crisp against the dark background */
+.hp-rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(194, 164, 255, 0.30),
+              inset 0 -40px 70px rgba(11, 8, 12, 0.55);
+}
+/* Soft light sweep across the top */
+.hp-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: linear-gradient(
+    145deg,
+    rgba(194, 164, 255, 0.16) 0%,
+    transparent 42%
+  );
+}
+
+@keyframes hpSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes hpFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+@keyframes hpBloom {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.07); }
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hp-ring-1, .hp-ring-2, .hp-disc, .hp-bloom { animation: none !important; }
+}
+
+/* Mobile: smaller disc, lighter effects */
+@media (max-width: 767px) {
+  .hp-bloom-a { filter: blur(34px); }
+  .hp-bloom-b { display: none; }
+  .hp-ring-2  { display: none; }
+  .hp-disc {
+    box-shadow:
+      0 0 0 1px rgba(194, 164, 255, 0.22),
+      0 0 30px rgba(127, 64, 255, 0.28),
+      0 14px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   VR SESSION STAGE — animated visualization of the FYP pipeline
+   ══════════════════════════════════════════════════════════ */
+.vrs-stage {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(194, 164, 255, 0.28);
+  background: #0b080c;
+  box-shadow: 0 0 46px rgba(127, 64, 255, 0.16);
+}
+.vrs-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+}
+
+/* SVG text */
+.vrs-name {
+  fill: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+  letter-spacing: 2.4px;
+  font-weight: 600;
+}
+.vrs-rail-label {
+  fill: rgba(194, 164, 255, 0.85);
+  font-size: 9px;
+  letter-spacing: 2.6px;
+  font-weight: 600;
+}
+.vrs-agent-label {
+  font-size: 8.5px;
+  letter-spacing: 1.4px;
+  font-weight: 600;
+}
+.vrs-log-title {
+  fill: #44ffaa;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+.vrs-log-sub {
+  fill: rgba(255, 255, 255, 0.55);
+  font-size: 8.5px;
+  letter-spacing: 1.4px;
+}
+.vrs-timer {
+  fill: rgba(255, 255, 255, 0.8);
+  font-size: 9.5px;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+/* Animations */
+@keyframes vrsPulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.95; transform: scale(1.06); }
+}
+.vrs-pulse-slow { animation: vrsPulse 4.5s ease-in-out infinite; transform-origin: center; }
+.vrs-pulse-fast { animation: vrsPulse 1.6s ease-in-out infinite; transform-origin: center; }
+
+@keyframes vrsMouth {
+  0%, 100% { height: 3px; }
+  50%      { height: 9px; }
+}
+.vrs-mouth { animation: vrsMouth 0.32s ease-in-out infinite; }
+
+@keyframes vrsHalo {
+  0%, 100% { opacity: 0.35; transform: translateY(0); }
+  50%      { opacity: 0.9;  transform: translateY(-3px); }
+}
+.vrs-halo { animation: vrsHalo 3.2s ease-in-out infinite; }
+
+@keyframes vrsLens {
+  0%, 100% { fill-opacity: 0.4; }
+  50%      { fill-opacity: 0.85; }
+}
+.vrs-lens { animation: vrsLens 2.4s ease-in-out infinite; }
+
+/* Voice waveform bars — grow from a fixed centre line */
+@keyframes vrsWave {
+  0%, 100% { height: 8px;  y: 156px; }
+  50%      { height: 34px; y: 143px; }
+}
+.vrs-wave   { animation: vrsWave 0.7s ease-in-out infinite; }
+.vrs-wave-0 { animation-delay: 0s; }
+.vrs-wave-1 { animation-delay: 0.12s; }
+.vrs-wave-2 { animation-delay: 0.24s; }
+.vrs-wave-3 { animation-delay: 0.36s; }
+
+/* Response beam travelling avatar → patient */
+@keyframes vrsBeam {
+  0%   { cx: 250px; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 424px; opacity: 0; }
+}
+.vrs-beam   { animation: vrsBeam 1.4s linear infinite; }
+.vrs-beam-0 { animation-delay: 0s; }
+.vrs-beam-1 { animation-delay: 0.45s; }
+.vrs-beam-2 { animation-delay: 0.9s; }
+
+/* Agent nodes firing */
+@keyframes vrsAgent {
+  0%, 100% { r: 11px; stroke-opacity: 0.5; }
+  50%      { r: 14px; stroke-opacity: 1; }
+}
+.vrs-agent   { animation: vrsAgent 0.9s ease-in-out infinite; }
+.vrs-agent-0 { animation-delay: 0s; }
+.vrs-agent-1 { animation-delay: 0.14s; }
+.vrs-agent-2 { animation-delay: 0.28s; }
+.vrs-agent-3 { animation-delay: 0.42s; }
+
+/* Dashed data flow */
+@keyframes vrsFlow { to { stroke-dashoffset: -40; } }
+.vrs-flow   { animation: vrsFlow 1s linear infinite; }
+.vrs-flow-1 { animation-delay: 0.1s; }
+.vrs-flow-2 { animation-delay: 0.2s; }
+.vrs-flow-3 { animation-delay: 0.3s; }
+
+/* Recording dot */
+@keyframes vrsRec {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+.vrs-rec { animation: vrsRec 1.3s ease-in-out infinite; }
+
+/* Caption bar */
+.vrs-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px 14px;
+  background: linear-gradient(to top, rgba(11, 8, 12, 0.96) 30%, rgba(11, 8, 12, 0));
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.vrs-caption-tag {
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #c2a4ff;
+  border: 1px solid rgba(194, 164, 255, 0.35);
+  background: rgba(194, 164, 255, 0.08);
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.vrs-caption-line {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.55;
+  font-weight: 300;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+.vrs-disclaimer {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 8.5px;
+  letter-spacing: 1.2px;
+  color: rgba(255, 255, 255, 0.32);
+  text-transform: uppercase;
+  margin: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vrs-stage * { animation: none !important; }
+}
+@media (max-width: 767px) {
+  .vrs-caption-line { font-size: 11px; }
+  .vrs-disclaimer { display: none; }
+}

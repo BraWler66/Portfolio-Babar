@@ -89,12 +89,12 @@ export default function AboutSection() {
               viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}
               style={{ fontSize: 16, color: "var(--muted)", lineHeight: 1.95, fontWeight: 300, marginBottom: 48 }}
             >
-              From detecting tumors in medical scans to training autonomous agents in
-              simulation — I bridge cutting-edge research with real-world deployment.
+              From detecting tumors in medical scans to orchestrating multi-agent LLM
+              pipelines — I bridge cutting-edge research with production-grade deployment.
               I live at the intersection of{" "}
-              <span style={{ color: "var(--accent)", fontWeight: 400 }}>Computer Vision</span>,{" "}
-              <span style={{ color: "var(--pink)" }}>LLMs</span>, and{" "}
-              <span style={{ color: "var(--accent)", fontWeight: 400 }}>Reinforcement Learning</span>.
+              <span style={{ color: "var(--accent)", fontWeight: 400 }}>Agentic AI</span>,{" "}
+              <span style={{ color: "var(--pink)" }}>LLM Fine-Tuning</span>, and{" "}
+              <span style={{ color: "var(--accent)", fontWeight: 400 }}>Computer Vision</span>.
             </motion.p>
 
             {/* Quick facts — always 2 columns */}

@@ -5,19 +5,19 @@ import { motion } from "framer-motion";
 const categories = [
   {
     title: "ML / DL / CV",
-    items: ["PyTorch", "TensorFlow", "Scikit-learn", "YOLOv8", "OpenCV", "Keras", "ResNet", "U-Net", "Transfer Learning"],
+    items: ["PyTorch", "TensorFlow", "Transformers", "YOLOv8", "OpenCV", "Diffusers", "ResNet", "U-Net", "RL (PPO/DQN)"],
   },
   {
-    title: "LLM & RAG",
-    items: ["HuggingFace", "LangChain", "Prompt Engineering", "Fine-tuning", "FAISS", "ChromaDB", "RAG Pipelines"],
+    title: "LLM & Agents",
+    items: ["LangChain", "LangGraph", "LlamaIndex", "Pydantic AI", "Agentic RAG", "LoRA / QLoRA", "Fine-Tuning", "Prompt Engineering"],
   },
   {
-    title: "Data",
-    items: ["Pandas", "NumPy", "Matplotlib", "Seaborn", "Tableau", "Power BI", "Excel"],
+    title: "LLMOps & Deploy",
+    items: ["vLLM", "Ollama", "FastAPI", "Docker", "ONNX Export", "Modal", "Replicate", "Weights & Biases"],
   },
   {
-    title: "Tools",
-    items: ["Python", "Git", "Streamlit", "Gradio", "Flask", "Docker", "Jupyter", "VS Code"],
+    title: "Languages & Tools",
+    items: ["Python", "C++", "Git", "HuggingFace", "Streamlit", "Gradio", "Jupyter", "Model Quantization"],
   },
 ];
 

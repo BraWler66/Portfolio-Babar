@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
-
-const HeroModel3D = dynamic(() => import("./HeroModel3D"), { ssr: false });
+import HeroPortrait from "./HeroPortrait";
 
 const roles = ["AI Engineer", "ML Researcher", "Computer Vision Expert", "LLM Developer"];
 
@@ -68,6 +66,11 @@ export default function HeroSection() {
         style={{ padding: "clamp(80px, 12vh, 120px) clamp(20px, 5vw, 40px) clamp(40px, 6vh, 80px) clamp(24px, 6vw, 60px)" }}
       >
 
+        {/* Portrait — mobile only (desktop version lives in the right column) */}
+        <div className="md:hidden" style={{ marginBottom: 28, display: "flex", justifyContent: "center" }}>
+          <HeroPortrait size={200} />
+        </div>
+
         {/* Hello label */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -125,8 +128,8 @@ export default function HeroSection() {
           transition={{ delay: 1.2, duration: 1 }}
           style={{ fontSize: "clamp(14px, 1.4vw, 16px)", color: "var(--muted)", maxWidth: "min(420px, 90vw)", lineHeight: 1.9, fontWeight: 300, marginBottom: 48 }}
         >
-          Building intelligent systems at the intersection of Machine Learning,
-          Computer Vision, and NLP. Passionate about turning research into real-world impact.
+          AI/ML Engineer specializing in agentic pipelines, LLM fine-tuning (LoRA/QLoRA),
+          and multimodal systems — from multi-agent orchestration to real-time inference in production.
         </motion.p>
 
         {/* Scroll indicator */}
@@ -149,62 +152,23 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* ── RIGHT: 3D model ──────────────────────────────────────── */}
+      {/* ── RIGHT: Portrait ──────────────────────────────────────── */}
       <div
-        className="relative hidden md:block"
+        className="relative hidden md:flex items-center justify-center"
         style={{ height: "100vh" }}
       >
-        {/* Left edge fade so model blends into text side */}
+        {/* Left edge fade so the portrait blends into the text side */}
         <div
           className="absolute inset-y-0 left-0 w-32 pointer-events-none"
           style={{
             background: "linear-gradient(to right, #0b080c, transparent)",
-            zIndex: 2,
-          }}
-        />
-        {/* Bottom fade */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
-          style={{
-            background: "linear-gradient(to top, #0b080c, transparent)",
-            zIndex: 2,
-          }}
-        />
-        {/* Top fade */}
-        <div
-          className="absolute inset-x-0 top-0 h-32 pointer-events-none"
-          style={{
-            background: "linear-gradient(to bottom, #0b080c, transparent)",
-            zIndex: 2,
+            zIndex: 3,
           }}
         />
 
-        {/* Glow behind model */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            top: "50%", left: "40%",
-            transform: "translate(-50%, -50%)",
-            width: 500, height: 500,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(194,164,255,0.12) 0%, transparent 65%)",
-            animation: "floatY 8s ease-in-out infinite",
-          }}
-        />
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            top: "40%", left: "60%",
-            transform: "translate(-50%, -50%)",
-            width: 300, height: 300,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(127,64,255,0.15) 0%, transparent 70%)",
-            animation: "floatY 6s ease-in-out infinite 2s",
-          }}
-        />
-
-        {!isMobile && <HeroModel3D />}
+        <HeroPortrait size={430} />
       </div>
+
     </section>
   );
 }

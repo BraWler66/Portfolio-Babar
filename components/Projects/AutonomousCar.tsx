@@ -15,7 +15,7 @@ const AutonomousCar = () => {
   const skills = [
     "Reinforcement Learning",
     "CARLA Simulator",
-    "Deep Q-Network (DQN)",
+    "PPO (Proximal Policy Optimization)",
     "Computer Vision",
     "Python",
     "OpenAI Gym",
@@ -25,11 +25,11 @@ const AutonomousCar = () => {
   
   return (
     <div className="py-10">
-      <div className="flex flex-col lg:flex-row gap-8 ">
-        {/* Left side - Project details */}
+      <div className="flex flex-col gap-8">
+        {/* Project details */}
         <motion.div
           whileHover={{ scale: 1.02 }}
-          className="bg-accent/30 rounded-xl p-6 border border-border/50 lg:w-1/2 backdrop-blur transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.1)]"
+          className="bg-accent/30 rounded-xl p-6 border border-border/50 backdrop-blur transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.1)]"
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -38,7 +38,7 @@ const AutonomousCar = () => {
             <h3 className="text-lg font-semibold">🚗 Autonomous-Driving-using-Reinforcement-Learning</h3>
           </div>
           <p className="text-muted-foreground text-sm mb-6">
-            Built a self-driving car in CARLA using Deep Q-Learning. The agent learns to drive safely by interacting with its environment. Used custom rewards and visualized training performance with TensorBoard.
+            Trained a PPO-based self-driving agent in CARLA using raw camera input for lane following and adaptive speed regulation. Engineered a custom reward-shaping function to penalize unsafe behavior and accelerate convergence.
           </p>
 
           <div className="flex flex-wrap gap-2 mb-6">
@@ -73,16 +73,6 @@ const AutonomousCar = () => {
           </CardFooter>
         </motion.div>
 
-        {/* Right side - GIF */}
-        <div className="lg:w-1/2 flex items-center justify-center">
-          <div className="rounded-xl overflow-hidden border border-border/50 backdrop-blur transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.1)] hover:scale-[1.02]">
-            <img 
-              src="car2.gif" 
-              alt="Autonomous car simulation" 
-              className="w-full h-auto object-cover"
-            />
-          </div>
-        </div>
       </div>
     </div>
   )
