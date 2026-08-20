@@ -63,11 +63,11 @@ export default function HeroSection() {
       {/* ── LEFT: Text content ─────────────────────────────────────── */}
       <div
         className="relative flex flex-col justify-center z-10"
-        style={{ padding: "clamp(80px, 12vh, 120px) clamp(20px, 5vw, 40px) clamp(40px, 6vh, 80px) clamp(24px, 6vw, 60px)" }}
+        style={{ padding: "clamp(80px, 12vh, 120px) clamp(20px, 5vw, 40px) clamp(40px, 6vh, 80px) clamp(24px, 8vw, 130px)" }}
       >
 
         {/* Portrait — mobile only (desktop version lives in the right column) */}
-        <div className="md:hidden" style={{ marginBottom: 28, display: "flex", justifyContent: "center" }}>
+        <div className="hero-portrait-mobile">
           <HeroPortrait size={200} />
         </div>
 
@@ -154,7 +154,7 @@ export default function HeroSection() {
 
       {/* ── RIGHT: Portrait ──────────────────────────────────────── */}
       <div
-        className="relative hidden md:flex items-center justify-center"
+        className="relative hero-portrait-desktop items-center justify-center"
         style={{ height: "100vh" }}
       >
         {/* Left edge fade so the portrait blends into the text side */}

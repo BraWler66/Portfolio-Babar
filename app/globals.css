@@ -796,3 +796,20 @@ section { position: relative; }
   .vrs-caption-line { font-size: 11px; }
   .vrs-disclaimer { display: none; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   HERO PORTRAIT — breakpoint gating
+   The hero grid splits into 2 columns at 768px, so exactly one
+   portrait must be visible on each side of that boundary.
+   ══════════════════════════════════════════════════════════ */
+.hero-portrait-mobile {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+.hero-portrait-desktop { display: none; }
+
+@media (min-width: 768px) {
+  .hero-portrait-mobile  { display: none !important; }
+  .hero-portrait-desktop { display: flex !important; }
+}

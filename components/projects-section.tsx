@@ -818,20 +818,21 @@ function OtherProjectsMarquee() {
       <div style={{ overflow: "hidden", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
         {/* Row 1 — left */}
         <div style={{ borderBottom: "1px solid rgba(127,64,255,0.12)", paddingTop: 2, paddingBottom: 2 }}>
-          <div className="marquee-row1" style={{ display: "flex", gap: 12, animation: `marquee-desktop 60s linear infinite`, width: "max-content", willChange: "transform", backfaceVisibility: "hidden" }}>
+          <div className="marquee-row1" style={{ display: "flex", animation: `marquee-desktop 60s linear infinite`, width: "max-content", willChange: "transform", backfaceVisibility: "hidden" }}>
             {row1.map((p, i) => <MarqueeCard key={i} project={p} />)}
           </div>
         </div>
         {/* Row 2 — right */}
         <div style={{ paddingTop: 2, paddingBottom: 2 }}>
-          <div className="marquee-row2" style={{ display: "flex", gap: 12, animation: `marquee-desktop 55s linear infinite reverse`, width: "max-content", willChange: "transform", backfaceVisibility: "hidden" }}>
+          <div className="marquee-row2" style={{ display: "flex", animation: `marquee-desktop 55s linear infinite reverse`, width: "max-content", willChange: "transform", backfaceVisibility: "hidden" }}>
             {row2x.map((p, i) => <MarqueeCard key={i} project={p} />)}
           </div>
         </div>
       </div>
 
       <style>{`
-        /* Desktop: card = 340px, 5 cards × 4 copies = 20 cards, one set = 5 × 352px = 1760px, translate = 25% (1 of 4 sets) */
+        /* Two identical sets; spacing lives in .marquee-card margin-right (NOT flex gap),
+           so one set is exactly 50% of the track and -50% wraps seamlessly. */
         @keyframes marquee-desktop {
           0%   { transform: translateX(0); }
           100% { transform: translateX(-50%); }
@@ -844,15 +845,14 @@ function OtherProjectsMarquee() {
           .marquee-row1 {
             animation-name: marquee-mobile !important;
             animation-duration: 120s !important;
-            gap: 10px !important;
           }
           .marquee-row2 {
             animation-name: marquee-mobile !important;
             animation-duration: 100s !important;
-            gap: 10px !important;
           }
           .marquee-card {
             width: 220px !important;
+            margin-right: 10px !important;
             padding: 16px 16px !important;
           }
         }
@@ -868,6 +868,7 @@ function MarqueeCard({ project, dim }: { project: typeof otherProjects[0]; dim?:
       style={{
         flexShrink: 0,
         width: 340,
+        marginRight: 12,
         padding: "22px 24px",
         border: `1px solid ${project.accent}22`,
         borderRadius: 10,
@@ -934,8 +935,6 @@ function VRTherapySection() {
       sublabel: "Secure Auth",
       color: "#7f40ff",
       desc: "Patient logs in via secure web portal. Role-based access — user or admin panel with full dashboard.",
-      screen: "/vr/vr-login.png",
-      screenLabel: "Auth Portal",
     },
     {
       id: 1,
@@ -944,8 +943,6 @@ function VRTherapySection() {
       sublabel: "Whisper STT",
       color: "#c2a4ff",
       desc: "Patient speaks or types. Whisper STT transcribes speech to text in real-time.",
-      screen: "/vr/vr-chat.png",
-      screenLabel: "Therapy Chat",
     },
     {
       id: 2,
@@ -954,8 +951,6 @@ function VRTherapySection() {
       sublabel: "Multi-Agent Orchestration",
       color: "#c2a4ff",
       desc: "LangGraph orchestrates agents — routes input to Mistral-7B, BERT classifiers and XAI in parallel.",
-      screen: null,
-      screenLabel: null,
     },
     {
       id: 3,
@@ -964,8 +959,6 @@ function VRTherapySection() {
       sublabel: "LoRA Fine-tuned LLM",
       color: "#c2a4ff",
       desc: "Fine-tuned Mistral-7B generates a compassionate CBT/mindfulness response tailored to patient state.",
-      screen: "/vr/vr-chat.png",
-      screenLabel: "Therapy Session",
     },
     {
       id: 4,
@@ -974,8 +967,6 @@ function VRTherapySection() {
       sublabel: "Analytics & Monitoring",
       color: "#c2a4ff",
       desc: "Admin monitors all sessions, user activity, reports generated, and platform analytics in real-time.",
-      screen: "/vr/vr-admin.png",
-      screenLabel: "Admin Panel",
     },
   ];
 
@@ -987,8 +978,6 @@ function VRTherapySection() {
       sublabel: "Unity · Welcome Screen",
       color: "#7f40ff",
       desc: "Patient puts on VR headset. Unity scene loads — 'Welcome to AI VR Therapy. Please speak your NAME and ID to begin.'",
-      screen: "/vr/vr-welcome.png",
-      screenLabel: "VR Welcome",
     },
     {
       id: 1,
@@ -997,8 +986,6 @@ function VRTherapySection() {
       sublabel: "Whisper STT · Identity",
       color: "#c2a4ff",
       desc: "Patient speaks name and ID. Whisper STT transcribes. System authenticates and starts therapy session timer.",
-      screen: "/vr/vr-avatar.png",
-      screenLabel: "VR Environment",
     },
     {
       id: 2,
@@ -1007,8 +994,6 @@ function VRTherapySection() {
       sublabel: "LangGraph + 4× BERT + Mistral",
       color: "#c2a4ff",
       desc: "Speech flows through LangGraph → 4× BERT classifiers (emotion, sentiment, crisis, topic) → Mistral-7B generates response → XAI analyzer explains output.",
-      screen: null,
-      screenLabel: null,
     },
     {
       id: 3,
@@ -1017,8 +1002,6 @@ function VRTherapySection() {
       sublabel: "ElevenLabs TTS · Unity Avatar",
       color: "#c2a4ff",
       desc: "AI therapist avatar inside the VR room speaks the response via ElevenLabs ultra-realistic TTS. Avatar lip-syncs in Unity.",
-      screen: "/vr/vr-avatar.png",
-      screenLabel: "Therapy Session",
     },
     {
       id: 4,
@@ -1027,8 +1010,6 @@ function VRTherapySection() {
       sublabel: "XAI · MongoDB · FastAPI",
       color: "#c2a4ff",
       desc: "Session data, emotions detected, and AI decisions are logged to MongoDB via FastAPI. XAI report generated for clinician review.",
-      screen: null,
-      screenLabel: null,
     },
   ];
 
@@ -1241,25 +1222,6 @@ function VRTherapySection() {
               </div>
 
               <VRSessionStage phase={activeStep} />
-
-              {/* Real Unity captures, shown honestly as build screenshots */}
-              {current.screen && (
-                <div style={{ marginTop: 14 }}>
-                  <p style={{ fontSize: 9, letterSpacing: 2.5, color: "var(--muted)", textTransform: "uppercase", marginBottom: 8 }}>
-                    Actual build · {current.screenLabel}
-                  </p>
-                  <AnimatePresence mode="wait">
-                    <motion.div key={`${activeTrack}-${activeStep}-shot`}
-                      initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      style={{ borderRadius: 10, overflow: "hidden", border: "1px solid rgba(194,164,255,0.18)" }}>
-                      <img src={current.screen} alt={current.screenLabel || ""}
-                        loading="lazy" decoding="async"
-                        style={{ width: "100%", display: "block", aspectRatio: "16/7", objectFit: "cover", opacity: 0.85 }} />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              )}
             </div>
           </div>
         </motion.div>
