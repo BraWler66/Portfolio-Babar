@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { attachBuild } from "@/lib/swarm/build-progress";
 
 export default function NeuralBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -54,6 +55,7 @@ export default function NeuralBackground() {
     );
     scene.add(lines);
 
+    const build = attachBuild(renderer, scene);
     let animId: number;
     let lastTime = 0;
     const FPS = 30; // cap background at 30fps — saves CPU
@@ -66,6 +68,7 @@ export default function NeuralBackground() {
       const t = now / 1000;
       lines.rotation.y = t * 0.025;
       lines.rotation.x = Math.sin(t * 0.015) * 0.06;
+      build();
       renderer.render(scene, camera);
     };
     animId = requestAnimationFrame(animate);

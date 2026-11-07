@@ -64,6 +64,7 @@ export default function Cursor() {
   return (
     <div
       ref={cursorRef}
+      data-swarm-ignore=""
       className="fixed top-0 left-0 z-[9999] pointer-events-none"
       style={{
         width: 50,

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { attachBuild } from "@/lib/swarm/build-progress";
 
 const TECHS = [
   "Python","PyTorch","TensorFlow","YOLOv8","OpenCV",
@@ -151,6 +152,7 @@ function initScene(mount: HTMLDivElement): () => void {
   };
   mount.addEventListener("mousemove", onMouse);
 
+  const build = attachBuild(renderer, scene);
   let animId: number;
   const timer = new THREE.Timer();
 
@@ -172,6 +174,7 @@ function initScene(mount: HTMLDivElement): () => void {
     ring.scale.setScalar(1 + Math.sin(t * 0.8) * 0.01);
     pL.intensity = 12 + Math.sin(t * 1.5) * 4;
 
+    build();
     renderer.render(scene, camera);
   };
   animate();

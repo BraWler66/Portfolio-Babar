@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { attachBuild } from "@/lib/swarm/build-progress";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { HDRLoader } from "three/examples/jsm/loaders/HDRLoader.js";
@@ -136,6 +137,7 @@ export default function Developer3D() {
 
     // ── Animate ───────────────────────────────────────────────────
     const timer = new THREE.Timer();
+    const build = attachBuild(renderer, scene);
     let animId: number;
 
     const animate = () => {
@@ -151,6 +153,7 @@ export default function Developer3D() {
         headBone.rotation.x += (-mouse.y * 0.15 - headBone.rotation.x) * 0.1;
       }
 
+      build();
       renderer.render(scene, camera);
     };
     animate();

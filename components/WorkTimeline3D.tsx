@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { attachBuild } from "@/lib/swarm/build-progress";
 
 // ── ONLY 2 REAL JOBS ──────────────────────────────────────────────────────────
 const JOBS = [
@@ -384,6 +385,7 @@ function initScene(mount: HTMLDivElement): () => void {
   mount.addEventListener("mousemove", onMouse);
 
   // ── ANIMATE ──────────────────────────────────────────────────────────────
+  const build = attachBuild(renderer, scene);
   let animId: number;
   const timer = new THREE.Timer();
   const phases = JOBS.map((_, i) => i * Math.PI);
@@ -442,6 +444,7 @@ function initScene(mount: HTMLDivElement): () => void {
     pL1.intensity = 20 + Math.sin(t * 1.2) * 6;
     pL2.intensity = 16 + Math.cos(t * 1.0) * 5;
 
+    build();
     renderer.render(scene, camera);
   };
   animate();

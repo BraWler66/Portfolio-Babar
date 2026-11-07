@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { attachBuild } from "@/lib/swarm/build-progress";
 
 export default function Brain3D() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -176,6 +177,7 @@ function initScene(mount: HTMLDivElement): () => void {
     };
     mount.addEventListener("mousemove", onMouse);
 
+    const build = attachBuild(renderer, scene);
     // ── Animate ──
     let animId: number;
     const timer = new THREE.Timer();
@@ -209,6 +211,7 @@ function initScene(mount: HTMLDivElement): () => void {
       pinkLight.intensity = 10 + Math.sin(t * 1.5) * 3;
       purpleLight.intensity = 8 + Math.cos(t * 1.2) * 2;
 
+      build();
       renderer.render(scene, camera);
     };
     animate();

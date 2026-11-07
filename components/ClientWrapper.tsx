@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import Header from "./header";
 import Footer from "./footer";
 import SocialIcons from "./SocialIcons";
+import SwarmRebuildButton from "./SwarmRebuildButton";
 
 const Cursor = dynamic(() => import("./Cursor"), { ssr: false });
 const Loading = dynamic(() => import("./Loading"), { ssr: false });
@@ -50,6 +51,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
           >
             <Header />
             <SocialIcons />
+            <SwarmRebuildButton />
             <main>{children}</main>
             <Footer />
           </motion.div>
